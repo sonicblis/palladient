@@ -1,0 +1,73 @@
+licensePlans{
+  text-align: center;
+  display: block;
+
+  & > licensePlan{
+    display: inline-block;
+    border: solid 1px #ccc;
+    width: 180px;
+    height: 300px;
+    position: relative;
+    vertical-align: top;
+    background: #eef2f7;
+
+    &:not(:last-child){
+      border-right: 0;
+    }
+
+    &:first-child{
+      border-radius: 10px 0 0 10px;
+      header{
+        border-radius: 10px 0 0 0;
+      }
+    }
+
+    &:last-child{
+      border-radius: 0 10px 10px 0;
+      header{
+        border-radius: 0 10px 0 0;
+      }
+    }
+
+    header{
+      padding: 10px;
+      font-weight: bold;
+      background: #555;
+      color: white;
+      display: block;
+      border-bottom: solid 1px #ccc;
+    }
+
+    description{
+      display: block;
+      margin-top: 20px;
+      item{
+        display: block;
+        margin-bottom: 10px;
+
+        label{
+          font-weight: bold;
+          &:after{
+            content: ':';
+          }
+        }
+      }
+    }
+
+    toolbar {
+      tool {
+        cursor: pointer;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 10px;
+        border-radius: 5px;
+
+        &:first-child{
+          bottom: 60px;
+        }
+      }
+    }
+  }
+}

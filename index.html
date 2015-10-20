@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Palladient</title>
+    <link rel="stylesheet" href="dist/all.css">
+    <script src="dist/thirdparty.js"></script>
+    <script src="dist/all.js"></script>
 </head>
-<body>
-this is content. bum ba dum dum duh duh duh.
+<body ng-app="palladient">
+<header>
+    <brand>Palladient</brand>
+    <user-tools>
+        <span ng-show="user.authenticated">
+            <tool ng-click="logout()">Logout</tool>
+            <tool><img ng-src="{{user.icon}}" />{{user.name}}</tool>
+        </span>
+        <tool ng-hide="user.authenticated" ng-click="login()">Login with Google</tool>
+    </user-tools>
+</header>
+<content>
+    <div ng-if="user && !user.licensePlan" ng-include="'app/licensePlans/licensePlanSelector.html'">
+
+    </div>
+</content>
 </body>
 </html>

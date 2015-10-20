@@ -1,0 +1,30 @@
+<div ng-controller="licensePlanSelectorController">
+    <h3 class="center">Select a license plan to get started</h3>
+    <licensePlans>
+        <licensePlan ng-repeat="licensePlan in licensePlans">
+            <header>{{licensePlan.name}}</header>
+            <description>
+                <item>
+                    <label>Workspaces</label>
+                    <value>{{licensePlan.workspaces | unlimitedFromZero}}</value>
+                </item>
+                <item>
+                    <label>Designers</label>
+                    <value>{{licensePlan.designers | unlimitedFromZero}}</value>
+                </item>
+                <item>
+                    <label>Members</label>
+                    <value>{{licensePlan.members | unlimitedFromZero}}</value>
+                </item>
+                <item>
+                    <label>Storage</label>
+                    <value>{{licensePlan.storageInGb | unlimitedFromZero}} {{licensePlan.storageInGb == 0 ? '' : 'GB'}}</value>
+                </item>
+            </description>
+            <toolbar>
+                <tool class="success" ng-click="selectPlan(licensePlan)" ng-show="licensePlan.trialLengthInDays">Start Trial</tool>
+                <tool class="primary">Purchase Now</tool>
+            </toolbar>
+        </licensePlan>
+    </licensePlans>
+</div>

@@ -1,53 +1,53 @@
-app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', '$injector', function($rootScope, $firebaseObject, $firebaseArray, $injector){
+app.service("userProvider", ['$rootScope', '$firebaseObject', 'firebase', function($rootScope, $firebaseObject, firebase) {
     //local
     var _this = this;
-    var currentUser = {authenticated: false};
-    var ref = new Firebase("https://palladient.firebaseio.com");
-    var user = function(authData){
+    var userInfo = function(authData){
         this.name = authData.google.displayName;
-        this.id = authData.google.id;
+        this.id = authData.uid;
         this.icon = authData.google.profileImageURL;
         this.authenticated = true;
+        this.lastLoggedIn = Firebase.ServerValue.TIMESTAMP;
     }
-    function loadUserData(auth){
-        currentUser = $firebaseObject(ref.child('users').child(auth.google.id));
-        _this.workspaces = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaces'));
-        _this.workspaceData = $firebaseArray(ref.child('users').child(auth.google.id).child('workspaceData'));
-        if (sessionStorage.loadedWorkspace)
-        {
-            var objectiveProvider = $injector.get("objectiveProvider");
-            objectiveProvider.loadWorkspaceObjective(sessionStorage.loadedWorkspace);
-        }
-        $rootScope.user = currentUser;
+
+    $rootScope.logout = function(){
+        _this.logout();
+    }
+    $rootScope.login = function(){
+        _this.login();
+    }
+
+    function loadUser(user){
+        //hook up the current user's ref
+       _this.userRef = firebase.accounts.child(user.uid);
+        $rootScope.user = $firebaseObject(_this.userRef);
+
+        //update the user's info
+        var _userInfo = new userInfo(user);
+        _this.userRef.update(_userInfo, function(){
+            //placeholder for callback once user update is complete
+        });
+    }
+
+    //exposed
+    this.logout = function(){
+        firebase.root.unauth();
+        _this.userRef.update({logout: Firebase.ServerValue.TIMESTAMP});
+        $rootScope.user = {authenticated: false};
     };
-    function addUser(user){
-        _this.accounts.$loaded().then(function(){
-            var existingUser = _this.users.find(function(existingUser){
-                return existingUser.id == user.id
-            });
-            if (!existingUser) {
-                _this.users[id] = user;
-                _this.users.$save();
+    this.login = function(){
+        firebase.root.authWithOAuthPopup("google", function (error, auth) {
+            if (error) {
+                console.log("Login Failed!", error);
+            } else {
+                loadUser(auth);
             }
         });
     };
-
-    //exposed
-    this.auth = function(){
-        var auth = ref.getAuth();
+    this.checkForAuth = function(){
+        var auth = firebase.root.getAuth();
         if (auth) {
-            loadUserData(auth);
-        }
-        else{
-            ref.authWithOAuthPopup("google", function (error, auth) {
-                if (error) {
-                    console.log("Login Failed!", error);
-                } else {
-                    loadUserData(auth);
-                    addUser(new user(auth));
-                }
-            });
+            loadUser(auth);
         }
     };
-
+    this.userRef = null;
 }]);
