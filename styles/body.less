@@ -7,7 +7,6 @@ body{
 .ghost{
   opacity: .25;
   cursor: pointer;
-  font-weight: bold;
   transition: .25s;
 }
 
@@ -23,14 +22,16 @@ message {
   color: #8DB2D6;
 }
 
-button, licensePlan > toolbar > tool{
+licensePlan > toolbar > tool{
   border: solid 1px #ccc;
   padding: 10px;
   font-size: 1em;
   background: white;
   border-radius: 3px;
   outline: 0;
+}
 
+button, toolbar > tool{
   &.warn{
     background: #f0ad4e;
     border: solid 1px #eea236;
@@ -52,3 +53,4 @@ button, licensePlan > toolbar > tool{
     color: white;
   }
 }
+

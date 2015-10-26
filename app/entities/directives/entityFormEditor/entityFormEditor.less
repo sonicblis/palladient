@@ -1,0 +1,51 @@
+entity-form-editor{
+  table{
+    td{
+      input{
+        margin: 0;
+        width: 300px;
+        &[type="number"]{
+          width: 50px;
+        }
+      }
+      textarea{
+        font-size: 1em;
+        width: 300px;
+        padding: 6px;
+        height: 150px;
+      }
+      select{
+        font-size: 1em;
+        padding: 6px;
+      }
+    }
+    td:first-child{
+      white-space: nowrap;
+      font-weight: bold;
+      text-align: right;
+      vertical-align: top;
+      line-height: 40px;
+
+      &:after{
+        content: ':'
+      }
+    }
+    td:last-child{
+      yes, no{
+        display: inline-block;
+        padding: 7px 10px;
+        border: solid 1px #ccc;
+        background: white;
+
+        &.selected{
+          background: #337ab7;
+          border: solid 1px #2e6da4;
+          color: white;
+        }
+      }
+      no{
+        border-left: 0;
+      }
+    }
+  }
+}

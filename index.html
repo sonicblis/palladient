@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Palladient</title>
+
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type='text/css'>
+
     <link rel="stylesheet" href="dist/all.css">
     <script src="dist/thirdparty.js"></script>
     <script src="dist/all.js"></script>
 </head>
 <body ng-app="palladient">
 <header>
-    <brand>Palladient</brand>
+    <brand><img src="img/Phaethon%20Logo_Symbol.png">Palladient</brand>
     <user-tools>
         <span ng-show="user.authenticated">
+            <tool ng-click="user.page = 'design'">Design</tool>
+            <tool ng-click="user.page = 'configure'">Configure</tool>
+            <tool ng-click="user.page = 'work'">Work</tool>
             <tool ng-click="logout()">Logout</tool>
             <tool><img ng-src="{{user.icon}}" />{{user.name}}</tool>
         </span>
         <tool ng-hide="user.authenticated" ng-click="login()">Login with Google</tool>
     </user-tools>
 </header>
-<content>
-    <div ng-if="user && !user.licensePlan" ng-include="'app/licensePlans/licensePlanSelector.html'">
-
-    </div>
+<content ng-init="user.page = 'design'">
+    <div ng-if="user.$id && !user.studio" ng-include="'app/licensePlans/licensePlanSelector.html'"></div>
+    <div ng-if="user.$id && user.studio && user.page == 'design'" ng-include="'app/studios/studio.html'"></div>
+    <div ng-if="user.$id && user.page == 'configure'" ng-include="'app/workspaces/configure.html'"></div>
+    <div ng-if="user.$id && user.page == 'work'" ng-include="'app/workspaces/workspace.html'"></div>
 </content>
 </body>
 </html>

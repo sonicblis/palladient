@@ -1,0 +1,41 @@
+<studio-explorer>
+    <header>
+        Studio Explorer
+        <toolbar>
+            <tool>
+                <i class="fa fa-times-circle"></i>
+            </tool>
+        </toolbar>
+    </header>
+    <content>
+        <search-box>
+            <i class="fa fa-search"></i>
+            <input type="text" ng-model="searchString">
+            <i class="fa fa-times-circle"></i>
+        </search-box>
+        <tree>
+            <folder>
+                <header>
+                    <i class="fa fa-folder-open"></i>
+                    Business Aspects
+                </header>
+                <item class="ghost" ng-click="addEntityDefinition()">
+                    <i class="fa fa-plus"></i> Add Aspect...
+                </item>
+                <item ng-repeat="entityDefinition in entityDefinitions">
+                    <i class="fa fa-file-o"></i>
+                    {{entityDefinition.name}}
+                </item>
+                <folder>
+                    <header>
+                        <i class="fa fa-folder-open"></i>
+                        Common Business Aspects
+                    </header>
+                    <item><i class="fa fa-file-o"></i>Member</item>
+                    <item><i class="fa fa-file-o"></i>Event</item>
+                    <item><i class="fa fa-file-o"></i>Document</item>
+                </folder>
+            </folder>
+        </tree>
+    </content>
+</studio-explorer>

@@ -1,5 +1,19 @@
 <div ng-controller="licensePlanSelectorController">
-    <h3 class="center">Select a license plan to get started</h3>
+    <h1 class="center">Select a license plan to get started</h1>
+    <div class="center">
+    <sub-content>
+        <img class="left" src="img/growth.jpg" />
+        <span class="right">
+            Our license plans are built to scale with your business, so feel
+            free to start small and then ramp up as your business continues to grow.
+            Once you've selected a plan, all the work you've done can grow with you.
+            Need more users? No problem.  With just a few clicks, you'll be able to
+            leverage our elastic cloud services to bring your whole team into a
+            collaborative space designed to keep your value stream flowing.
+        </span>
+    </sub-content>
+    </div>
+    <br /><br />
     <licensePlans>
         <licensePlan ng-repeat="licensePlan in licensePlans">
             <header>{{licensePlan.name}}</header>

@@ -1,0 +1,33 @@
+@boxSize: 40px;
+
+configuration{
+  toolbox{
+    display:inline-block;
+    float: left;
+    background: #ccc;
+    height: calc(~"100vh - 54px");
+
+    tool{
+      display: block;
+      border: solid 1px #ccc;
+      width: 300px;
+      background: white;
+
+      i{
+        font-size: 1.3em !important;
+        text-align: center;
+        margin-right: 10px;
+        color: white;
+        width: @boxSize + 2px;
+        height: @boxSize;
+        line-height: @boxSize !important;
+        border-right: solid 1px #ccc;
+        background: #aaa;
+      }
+
+      &:not(:last-child){
+        border-bottom: 0;
+      }
+    }
+  }
+}

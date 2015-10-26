@@ -1,0 +1,32 @@
+<table>
+    <thead>
+        <tr>
+            <td>
+                Name
+            </td>
+            <td>
+                Type
+            </td>
+            <td>
+                Length
+            </td>
+            <td>
+                Required
+            </td>
+        </tr>
+    </thead>
+    <tr ng-repeat="property in properties">
+        <td>
+            <input ng-model="property.name" focus-when="$parent.$parent.step == 2">
+        </td>
+        <td>
+            <select ng-options="type.value as type.display for type in types" ng-model="property.type" ng-init="property.type = property.type || 'string'"></select>
+        </td>
+        <td>
+            <input size="10" ng-model="property.length">
+        </td>
+        <td>
+            <select ng-keydown="addAnotherIfTab($event)" ng-options="requiredOption for requiredOption in ['Yes','No']" ng-model="property.required" ng-init="property.required = property.required || 'Yes'"></select>
+        </td>
+    </tr>
+</table>

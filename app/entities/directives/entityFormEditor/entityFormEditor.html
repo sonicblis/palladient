@@ -1,0 +1,35 @@
+<table>
+    <tr ng-repeat="property in properties">
+        <td>
+            {{property.name}}
+        </td>
+        <td>
+            <ng-include src="property.type | trimAfterColon"></ng-include>
+        </td>
+    </tr>
+</table>
+
+<script type="text/ng-template" id="string">
+    <input type="text" required="{{property.required}}" />
+</script>
+<script type="text/ng-template" id="bool">
+    <div>
+        <yes class="selected">Yes</yes><no>No</no>
+    </div>
+</script>
+<script type="text/ng-template" id="datetime">
+    <input type="date" required="{{property.required}}" />
+</script>
+<script type="text/ng-template" id="int">
+    <input type="number" required="{{property.required}}" />
+</script>
+<script type="text/ng-template" id="text">
+    <textarea required="{{property.required}}"></textarea>
+</script>
+<script type="text/ng-template" id="typeDefinition">
+    <select>
+        <option>{{property.name}} 1</option>
+        <option>{{property.name}} 2</option>
+        <option>{{property.name}} 3</option>
+    </select>
+</script>

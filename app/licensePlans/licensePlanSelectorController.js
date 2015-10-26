@@ -1,4 +1,4 @@
-app.controller("licensePlanSelectorController", ['$scope', 'firebase', 'userProvider', function($scope, firebase, userProvider){
+app.controller("licensePlanSelectorController", ['$scope', 'firebase', 'userProvider', '$rootScope', function($scope, firebase, userProvider, $rootScope){
     $scope.licensePlans = [];
     firebase.licensePlans.once(firebase.events.valueChanged, function(licensePlans){
         licensePlans.forEach(function(plan){
@@ -8,6 +8,14 @@ app.controller("licensePlanSelectorController", ['$scope', 'firebase', 'userProv
         });
     });
     $scope.selectPlan = function(licensePlan){
-        userProvider.userRef.update({licensePlan: licensePlan.$id});
+        var newStudioKey = firebase.studios.push().key();
+        var updates = {};
+        updates[firebase.stringify(userProvider.userRef, 'studio')] = newStudioKey;
+        updates[firebase.stringify(firebase.studios, newStudioKey)] = {
+            name: $rootScope.user.name + '\'s Studio',
+            licensePlan: licensePlan.$id,
+            owner: $rootScope.user.$id
+        };
+        firebase.root.update(updates);
     };
 }]);

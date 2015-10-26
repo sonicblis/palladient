@@ -1,0 +1,73 @@
+stepped-process {
+  step {
+    display: block;
+    width: 900px;
+    &:not(.active) {
+      header {
+        background: #DCDCDC;
+        border: solid 1px #B7B7B7;
+        color: #989898;
+        &:not(:last-child){
+          border-bottom: 0;
+        }
+      }
+      content {
+        display: none;
+      }
+    }
+    header {
+      display: block;
+      font-weight: bold;
+      background: #8DB2D6;
+      font-size: 1.2em;
+      color: white;
+      padding: 15px;
+    }
+    content {
+      padding: 20px 20px 25px 20px;
+      display: block;
+      border: solid 1px #ccc;
+      background: #eee;
+      position: relative;
+      overflow: visible;
+
+      input {
+        margin-top: 10px;
+        padding: 5px;
+        display: block;
+      }
+    }
+    &:not(:last-child){
+      content{
+        border-bottom: 0;
+      }
+    }
+    &:first-child{
+      header {
+        border-radius: 10px 10px 0 0;
+      }
+    }
+    &:last-child{
+      &:not(.active) {
+        header {
+          border-radius: 0 0 10px 10px;
+        }
+      }
+      content{
+        border-radius: 0 0 10px 10px;
+      }
+    }
+  }
+  toolbar{
+    padding: 20px 0 0 0;
+    overflow: auto;
+    display:inline-block;
+    width: 700px;
+
+    tool{
+      padding: 5px 10px;
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,3 +1,18 @@
+sub-content{
+  display: inline-block;
+  overflow: auto;
+  width: 750px;
+  text-align: left;
+  span{
+    width: 500px;
+    margin-top: 10px;
+  }
+  img{
+    width: 200px;
+    vertical-align: middle;
+  }
+}
+
 licensePlans{
   text-align: center;
   display: block;
@@ -40,16 +55,24 @@ licensePlans{
 
     description{
       display: block;
-      margin-top: 20px;
       item{
         display: block;
-        margin-bottom: 10px;
-
+        padding-bottom: 5px;
+        padding-top: 5px;
+        border-bottom: dashed 1px #ccc;
         label{
           font-weight: bold;
+          display:inline-block;
+          width: 100px;
+          text-align: right;
           &:after{
             content: ':';
           }
+        }
+        value{
+          display: inline-block;
+          text-align: left;
+          width: 70px;
         }
       }
     }
