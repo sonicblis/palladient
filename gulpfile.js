@@ -5,6 +5,7 @@ var shell = require('gulp-shell');
 var watch = require('gulp-watch');
 var browser = require('browser-sync');
 var less = require('gulp-less');
+var fallback = require('connect-history-api-fallback');
 
 gulp.task('unify', function() {
     gulp.src('app/**/*.js')
@@ -25,7 +26,10 @@ gulp.task('thirdParty', function(){
         'node_modules/angular-ui-sortable/dist/sortable.min.js',
         'thirdParty/firebase.min.js',
         'node_modules/angularfire/dist/angularfire.min.js',
-        'node_modules/angular-sanitize/angular-sanitize.min.js'
+        'node_modules/angular-sanitize/angular-sanitize.min.js',
+        'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+        'node_modules/ui-router-extras/release/modular/ct-ui-router-extras.core.min.js',
+        'node_modules/ui-router-extras/release/modular/ct-ui-router-extras.dsr.min.js'
     ])
         .pipe(concat('thirdparty.js'))
         .pipe(gulp.dest('dist/'));
@@ -39,7 +43,8 @@ gulp.task('less', function(){
 gulp.task('webServer', function() {
     browser({
         server:{
-            baseDir: './'
+            baseDir: './',
+            middleware: [fallback()]
         },
         files: ["index.html","app/**/*.html","dist/**/*.*"]
     });

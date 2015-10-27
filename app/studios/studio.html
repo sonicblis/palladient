@@ -1,8 +1,8 @@
-<div ng-controller="studioController">
+<studio ng-controller="studioController">
     <solution-explorer ng-include="'app/studios/studioExplorer.html'"></solution-explorer>
     <entity-definition-editor ng-show="addingEntity" ng-include="'app/entities/entityDefinitionEditor.html'"></entity-definition-editor>
     <div ng-show="!addingEntity" class="center">
         <h1>Well, here we find ourselves</h1>
         This is your studio.  Click add Business Aspect on the right to start defining your business process.
     </div>
-</div>
+</studio>
