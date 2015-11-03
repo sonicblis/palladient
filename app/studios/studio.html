@@ -1,4 +1,13 @@
 <studio ng-controller="studioController">
+    <toolbox>
+        <tool ui-sref="configure.workspaces">
+            <i class="fa fa-desktop"></i>Workspaces
+        </tool>
+        <tool ui-sref="configure.users">
+            <i class="fa fa-user"></i>Users
+        </tool>
+    </toolbox>
+
     <solution-explorer ng-include="'app/studios/studioExplorer.html'"></solution-explorer>
     <entity-definition-editor ng-show="addingEntity" ng-include="'app/entities/entityDefinitionEditor.html'"></entity-definition-editor>
     <div ng-show="!addingEntity" class="center">

@@ -1,3 +1,5 @@
+@import '../../../../styles/colors.less';
+
 entity-form-editor{
   table{
     td{
@@ -34,13 +36,11 @@ entity-form-editor{
       yes, no{
         display: inline-block;
         padding: 7px 10px;
-        border: solid 1px #ccc;
-        background: white;
+        #border-light;
+        #bg-colorless;
 
         &.selected{
-          background: #337ab7;
-          border: solid 1px #2e6da4;
-          color: white;
+          .primary;
         }
       }
       no{

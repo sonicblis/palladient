@@ -1,13 +1,15 @@
+@import 'colors.less';
+
 body{
   margin: 0;
   padding: 0;
   & > header{
-    color: black;
+    color: @text-default;
     font-size: 1.5em;
     padding: 10px;
     margin: 0 0 10px 0;
-    background: white;
-    border-bottom: solid 1px #888;
+    #bg-colorless;
+    border-bottom: solid 1px @dark;
     top: 0;
     position: fixed;
     width: calc(~"100% - 10px");
@@ -33,17 +35,17 @@ body{
         padding: 14px;
         cursor: pointer;
         &:hover{
-          background: #ccc;
+          #bg-light;
           padding: 14px;
         }
         & > img{
           height: 31px;
           vertical-align: bottom;
           margin-right: 12px;
-          border: solid 1px #7D7D7D;
+          #border-dark;
         }
         &:last-child{
-          border-left: solid 1px #888;
+          border-left: solid 1px @dark;
         }
       }
     }

@@ -1,3 +1,5 @@
+@import '../../styles/colors.less';
+
 sub-content{
   display: inline-block;
   overflow: auto;
@@ -19,12 +21,12 @@ licensePlans{
 
   & > licensePlan{
     display: inline-block;
-    border: solid 1px #ccc;
+    #border-light;
     width: 180px;
     height: 300px;
     position: relative;
     vertical-align: top;
-    background: #eef2f7;
+    #bg-lightest;
 
     &:not(:last-child){
       border-right: 0;
@@ -47,10 +49,10 @@ licensePlans{
     header{
       padding: 10px;
       font-weight: bold;
-      background: #555;
-      color: white;
+      #bg-darkest;
+      #text-colorless;
       display: block;
-      border-bottom: solid 1px #ccc;
+      border-bottom: solid 1px @light;
     }
 
     description{
@@ -59,7 +61,7 @@ licensePlans{
         display: block;
         padding-bottom: 5px;
         padding-top: 5px;
-        border-bottom: dashed 1px #ccc;
+        border-bottom: dashed 1px @light;
         label{
           font-weight: bold;
           display:inline-block;

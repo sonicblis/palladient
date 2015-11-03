@@ -1,14 +1,20 @@
+@import '../../styles/toolbox.less';
+@import '../../styles/colors.less';
+
 studio {
-  padding-top: 10px;
   display:block;
 
+  toolbox{
+    #toolbox; // from toolbox.less
+  }
+
   entity-definition-editor {
-    margin: 0 0 0 10px;
+    margin: 10px;
     display: inline-block;
     hint {
       display: block;
       font-size: .8em;
-      color: #888;
+      #text-dark;
     }
     input {
       font-size: 1em;
@@ -17,16 +23,17 @@ studio {
 
   studio-explorer {
     float: right;
-    background: #eee;
-    border: solid 1px #ccc;
+    #bg-lightest;
+    #border-light;
     border-radius: 12px 12px 0 0;
-    margin-right: 10px;
+    margin: 10px;
+
     & > header {
       padding: 10px;
       border-radius: 10px 10px 0 0;
-      background: #8DB2D6;
+      #bg-dark;
       font-size: 1.2em;
-      color: white;
+      #text-colorless;
       i {
         margin-top: 4px;
         float: right;
@@ -37,11 +44,11 @@ studio {
       padding: 10px;
 
       search-box {
-        border: solid 1px #ccc;
+        #border-light;
         display: block;
         padding: 2px 6px;
         border-radius: 8px;
-        background: white;
+        #bg-colorless;
         margin-bottom: 10px;
 
         input {
@@ -62,7 +69,7 @@ studio {
           margin-bottom: 2px;
 
           i {
-            color: #d3aa1c;
+            #text-tertiary;
           }
         }
         item {

@@ -1,35 +1,25 @@
+@import '../../styles/colors.less';
+
 stepped-process {
   step {
     display: block;
     width: 900px;
-    &:not(.active) {
-      header {
-        background: #DCDCDC;
-        border: solid 1px #B7B7B7;
-        color: #989898;
-        &:not(:last-child){
-          border-bottom: 0;
-        }
-      }
-      content {
-        display: none;
-      }
-    }
+
     header {
       display: block;
       font-weight: bold;
-      background: #8DB2D6;
       font-size: 1.2em;
-      color: white;
       padding: 15px;
+      #bg-primary;
+      #text-colorless;
     }
     content {
       padding: 20px 20px 25px 20px;
       display: block;
-      border: solid 1px #ccc;
-      background: #eee;
       position: relative;
       overflow: visible;
+      #border-light;
+      #bg-lightest;
 
       input {
         margin-top: 10px;
@@ -37,7 +27,21 @@ stepped-process {
         display: block;
       }
     }
+
+    &:not(.active) {
+      header {
+        background: lighten(@primary, 20%);
+        #text-colorless;
+        #border-primary;
+      }
+      content {
+        display: none;
+      }
+    }
     &:not(:last-child){
+      header{
+        border-bottom: 0;
+      }
       content{
         border-bottom: 0;
       }

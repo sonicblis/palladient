@@ -1,0 +1,43 @@
+@import 'colors.less';
+@boxSize: 40px;
+
+#toolbox{
+  display:inline-block;
+  float: left;
+  #bg-light;
+  height: calc(~"100vh - 54px");
+
+  tool{
+    display: block;
+    width: 300px;
+    cursor: pointer;
+    #border-light;
+    #bg-colorless;
+
+    &:hover, selected{
+      #bg-lightest;
+      #border-medium;
+      i{
+        #bg-primary;
+      }
+    }
+
+    i{
+      font-size: 1.3em !important;
+      text-align: center;
+      margin-right: 10px;
+      width: @boxSize + 2px;
+      height: @boxSize;
+      line-height: @boxSize !important;
+      border-right: solid 1px @light;
+      #text-colorless;
+      #bg-medium;
+    }
+    &:first-child{
+      border-top: 0;
+    }
+    &:not(:last-child){
+      border-bottom: 0;
+    }
+  }
+}
