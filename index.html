@@ -17,11 +17,17 @@
     <brand><img src="img/Phaethon%20Logo_Symbol.png">Palladient</brand>
     <user-tools>
         <span ng-show="user.authenticated">
-            <tool ui-sref="design">Design</tool>
-            <tool ui-sref="configure">Configure</tool>
-            <tool ui-sref="work">Work</tool>
-            <tool ng-click="logout()">Logout</tool>
-            <tool><img ng-src="{{user.icon}}" />{{user.name}}</tool>
+            <tool ui-sref="design" ui-sref-active="active">
+                Design</tool><tool ui-sref="configure" ui-sref-active="active">
+                Configure</tool><tool ui-sref="work" ui-sref-active="active">
+                Work</tool><tool drop-down drop-down-align="right">
+                <img ng-src="{{user.icon}}" />{{user.name}}
+                <drop-down-options>
+                    <option ng-click="logout()">Logout</option>
+                    <option>My Profile</option>
+                    <option>Change Workspace</option>
+                </drop-down-options>
+            </tool>
         </span>
         <tool ng-hide="user.authenticated" ng-click="login()">Login with Google</tool>
     </user-tools>

@@ -1,0 +1,39 @@
+<stepped-process>
+    <step class="active">
+        <header>
+            Select Workspace
+        </header>
+        <content>
+            Select the workspace to which you'd like to publish the selected entities
+            <hint></hint>
+            <select ng-model="publisher.selectedWorkspace" ng-options="workspace.name for workspace in workspaces"></select>
+        </content>
+    </step>
+    <step>
+        <header>
+            Publish Entities
+        </header>
+        <content>
+            <span ng-show="publisher.selectedWorkspace">
+                Alright.  The following entities will be published to {{publisher.selectedWorkspace.name}}
+                <hint>
+                    Your new entities will be immediately available for anyone working in the workspace.
+                </hint>
+                <ul>
+                    <li ng-repeat="entityDefinition in publisher.entityDefinitions">{{entityDefinition.name}}</li>
+                </ul>
+            </span>
+            <span ng-show="!publisher.selectedWorkspace">
+                You have to select a workspace first.  We didn't select one for you in order to minimize mistakes.  =]
+            </span>
+            <toolbar>
+                <tool class="primary" ng-click="publishEntitiesToWorkspace()">
+                    Publish
+                </tool>
+                <tool class="warn" ng-click="cancel()">
+                    Cancel
+                </tool>
+            </toolbar>
+        </content>
+    </step>
+</stepped-process>

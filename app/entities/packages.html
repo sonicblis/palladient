@@ -1,0 +1,61 @@
+<packages ng-controller="packagesController">
+    <package-editor ng-show="creatingPackage" fake-modal>
+        <stepped-process>
+            <step class="active">
+                <header>
+                    Name the package
+                </header>
+                <content>
+                    What is the name of your package?
+                    <hint>Give the package a name for future reference</hint>
+                    <input ng-model="newPackage.name">
+                </content>
+            </step>
+            <step>
+                <header>
+                    Select Components
+                </header>
+                <content>
+                    Add components to your package
+                    <hint>
+                        Add the entities to this package to be deployed to a workspace.  Dependencies will be pulled in automatically.
+                    </hint>
+                    <select ng-model="entityDefinitionToAdd" ng-options="entityDefinition.name for entityDefinition in entityDefinitions"></select>
+                    <button class="primary" ng-click="addEntityDefinition(entityDefinitionToAdd)">Add to Package</button>
+                    <div ng-repeat="entityDefinition in newPackage.entityDefinitions track by $index">{{entityDefinition.name}}</div>
+                </content>
+            </step>
+            <step>
+                <header>Complete</header>
+                <content>
+                    Your package is ready to go
+                    <hint>Once it is saved, you can deploy it to a workspace</hint>
+                    <toolbar>
+                        <tool class="primary" ng-click="savePackageDefinition(newPackage)">
+                            Save
+                        </tool>
+                        <tool class="warn" ng-click="cancel()">
+                            Cancel
+                        </tool>
+                    </toolbar>
+                </content>
+            </step>
+        </stepped-process>
+    </package-editor>
+    <table-tools>
+        <tool ng-click="creatingPackage = true">Add Package</tool>
+        <tool class="primary" drop-down>
+            Actions
+            <drop-down-options>
+                <option ng-click="publishSelected()">Publish to Workspace...</option>
+                <option ng-click="deleteSelected()">Delete</option>
+            </drop-down-options>
+        </tool>
+        <search-box class="right">
+            <i class="fa fa-search"></i>
+            <input type="text" ng-model="searchString">
+            <i class="fa fa-times-circle"></i>
+        </search-box>
+    </table-tools>
+    <table table-definition="tableDefinition" ng-model="packages" filter-with="searchString"></table>
+</packages>

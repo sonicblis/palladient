@@ -1,0 +1,25 @@
+@import '../../../../styles/colors';
+
+drop-down-options{
+  display: block;
+  background: @colorless;
+  #text-darkest;
+  #border-tertiary;
+
+  option{
+    padding: 5px 10px;
+
+    &:hover{
+      #bg-primary;
+      #text-colorless;
+    }
+
+    &:first-child{
+      padding-top: 10px;
+    }
+
+    &:last-child{
+      padding-bottom: 10px;
+    }
+  }
+}

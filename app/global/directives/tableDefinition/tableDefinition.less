@@ -1,0 +1,68 @@
+@import '../../../../styles/colors';
+
+table.data-table{
+  border-collapse: collapse;
+  width: 100%;
+  border-top: 0;
+
+  thead{
+    tr, td, th{
+      border-top: 0 !important;
+    }
+
+    tr{
+      #bg-dark !important;
+      #text-colorless;
+    }
+  }
+
+  tr{
+    cursor: pointer;
+    position: relative;
+
+    &:nth-child(even){
+      #bg-lightest;
+    }
+    &:nth-child(odd){
+      #bg-colorless;
+    }
+
+    &.selected{
+      #bg-primary;
+      #text-colorless;
+    }
+
+    toolbar{
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 40px;
+      #bg-colorless;
+
+      tool{
+
+      }
+    }
+
+    th{
+      text-align: left;
+    }
+
+    td, th{
+      #border-light;
+      margin: 1%;
+      padding: 7px;
+      position: relative;
+
+      &:first-child{
+        text-align: center;
+        width: 15px;
+      }
+    }
+
+    td[colspan]{
+      text-align: left;
+    }
+  }
+}

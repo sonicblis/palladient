@@ -1,17 +1,19 @@
 <studio ng-controller="studioController">
     <toolbox>
-        <tool ui-sref="configure.workspaces">
+        <tool ui-sref="design.entity" ui-sref-active="active">
+            <i class="fa fa-file"></i>Business Aspects
+        </tool>
+        <tool ui-sref="design.packages" ui-sref-active="active">
+            <i class="fa fa-archive"></i>Packages
+        </tool>
+        <tool ui-sref="design.workspaces" ui-sref-active="active">
             <i class="fa fa-desktop"></i>Workspaces
         </tool>
-        <tool ui-sref="configure.users">
-            <i class="fa fa-user"></i>Users
+        <tool ng-click="showStudio = true">
+            <i class="fa fa-folder"></i>Studio Explorer
         </tool>
     </toolbox>
 
     <solution-explorer ng-include="'app/studios/studioExplorer.html'"></solution-explorer>
-    <entity-definition-editor ng-show="addingEntity" ng-include="'app/entities/entityDefinitionEditor.html'"></entity-definition-editor>
-    <div ng-show="!addingEntity" class="center">
-        <h1>Well, here we find ourselves</h1>
-        This is your studio.  Click add Business Aspect on the right to start defining your business process.
-    </div>
+    <div ui-view></div>
 </studio>

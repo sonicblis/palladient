@@ -1,45 +1,47 @@
-<stepped-process ng-init="step = 1">
-    <step ng-class="{active: step == 1}" ng-click="step = 1">
-        <header>New Aspect Name</header>
-        <content>
-            What is the name of the Business Aspect?<br />
-            <hint>This could be something like 'Order' or 'Customer'.  Something that is a part of getting your work done.</hint>
-            <input ng-model="entityDefinition.name" ng-enter="step = 2" />
-        </content>
-    </step>
-    <step ng-class="{active: step == 2}" ng-click="step = 2">
-        <header>{{entityDefinition.name}} Properties</header>
-        <content>
-            What properties does this Aspect have?
-            <hint>These are the things that describe your aspect.  Things like 'amount' and 'quantity' for an Order would be added here.</hint>
-            <entity-property-editor ng-enter="step = 3" ng-model="entityDefinition.properties"></entity-property-editor>
-        </content>
-    </step>
-    <step ng-class="{active: step == 3}" ng-click="step = 3">
-        <header>New {{entityDefinition.name}} Form</header>
-        <content>
-            What does the form look like when creating one of these?
-            <hint>We've created a default form, but you can change it to suit your specific needs</hint>
-            <entity-form-editor ng-model="entityDefinition.properties"></entity-form-editor>
-        </content>
-    </step>
-    <step ng-class="{active: step == 4}" ng-click="step = 4">
-        <header>{{entityDefinition.name}} In a List</header>
-        <content></content>
-    </step>
-    <step ng-class="{active: step == 5}" ng-click="step = 5">
-        <header>Finalize</header>
-        <content>
-            Great, your Business Aspect is ready to go
-            <hint>Once you've saved your new Aspect, users will be able to start creating them</hint>
-            <toolbar>
-                <tool class="primary" ng-click="saveEntityDefinition()">
-                    Save
-                </tool>
-                <tool class="warn" ng-click="entityDefinition = {}; addingEntity = false">
-                    Cancel
-                </tool>
-            </toolbar>
-        </content>
-    </step>
-</stepped-process>
+<entity-definition-editor  ng-show="addingEntity" fake-modal>
+    <stepped-process>
+        <step class="active">
+            <header>New Aspect Name</header>
+            <content>
+                What is the name of the Business Aspect?<br />
+                <hint>This could be something like 'Order' or 'Customer'.  Something that is a part of getting your work done.</hint>
+                <input ng-model="entityDefinition.name" ng-enter="step = 2" />
+            </content>
+        </step>
+        <step>
+            <header>{{entityDefinition.name}} Properties</header>
+            <content>
+                What properties does this Aspect have?
+                <hint>These are the things that describe your aspect.  Things like 'amount' and 'quantity' for an Order would be added here.</hint>
+                <entity-property-editor ng-enter="step = 3" ng-model="entityDefinition.properties"></entity-property-editor>
+            </content>
+        </step>
+        <step>
+            <header>New {{entityDefinition.name}} Form</header>
+            <content>
+                What does the form look like when creating one of these?
+                <hint>We've created a default form, but you can change it to suit your specific needs</hint>
+                <entity-form-editor ng-model="entityDefinition.properties"></entity-form-editor>
+            </content>
+        </step>
+        <step>
+            <header>{{entityDefinition.name}} In a List</header>
+            <content></content>
+        </step>
+        <step>
+            <header>Complete</header>
+            <content>
+                Great, your Business Aspect is ready to go
+                <hint>Once you've saved your new Aspect, users will be able to start creating them</hint>
+                <toolbar>
+                    <tool class="primary" ng-click="saveEntityDefinition()">
+                        Save
+                    </tool>
+                    <tool class="warn" ng-click="cancel()">
+                        Cancel
+                    </tool>
+                </toolbar>
+            </content>
+        </step>
+    </stepped-process>
+</entity-definition-editor>

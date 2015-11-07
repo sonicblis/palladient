@@ -1,0 +1,29 @@
+<thead>
+    <tr>
+        <th><i class="fa fa-square-o" ng-class="{'fa-check-square-o':allChecked()}"></i></th>
+        <th ng-repeat="column in tableDefinition">{{column.headerText}}</th>
+    </tr>
+</thead>
+<tr ng-show="ngModel.length == 0">
+    <td colspan="{{(tableDefinition.length + 1)}}">
+        There aren't any yet.  Use the button above to create one.
+    </td>
+</tr>
+<tr ng-show="ngModel.length > 0" ng-repeat="rowData in ngModel | filter:filterWith" ng-click="rowData.selected = !rowData.selected" ng-class="{'selected':rowData.selected}">
+    <td>
+        <i class="fa" ng-class="{'fa-square-o':!rowData.selected,'fa-check-square-o':rowData.selected}"></i>
+    </td>
+    <td ng-repeat="column in tableDefinition">
+        <ng-include src="column.templateOption || 'value'"></ng-include>
+        <toolbar ng-if="$last">
+            <tool></tool>
+        </toolbar>
+    </td>
+</tr>
+
+<script type="text/ng-template" id="value">
+    {{rowData[column.propertyName]}}
+</script>
+<script type="text/ng-template" id="date">
+    {{rowData[column.propertyName] | date:"MMM d"}}
+</script>

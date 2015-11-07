@@ -1,0 +1,55 @@
+<workspaces ng-controller="workspacesController">
+    <table-tools>
+        <tool ng-click="upgrade = true">
+            Get More...
+        </tool>
+        <tool drop-down class="primary">
+            Actions
+            <drop-down-options>
+                <option>Revert to Version...</option>
+            </drop-down-options>
+        </tool>
+    </table-tools>
+    <table ng-model="workspaces" table-definition="tableDefinition"></table>
+        <stepped-process fake-modal ng-show="upgrade">
+            <step class="active">
+                <header>Is it time to upgrade?</header>
+                <content>
+                    Upgrading gives you much more room to test your workflow solutions before pushing them into prime time.  Choose an option below to increase your number of workspaces.
+                    <hint>You can isolate changes in a specific workspace to see how they'll work before releasing them.</hint>
+                </content>
+            </step>
+            <step>
+                <header>How many workspaces do you need?</header>
+                <content>
+                    Choose the number of workspaces that will give you the room you want.
+                    <hint>You can create staging or test workspaces with more than one</hint>
+                    <select>
+                        <option>Add 1 workspaces</option>
+                        <option>Add 2 workspaces</option>
+                        <option>Add 3 workspaces</option>
+                    </select>
+                </content>
+            </step>
+            <step>
+                <header>Payment Information</header>
+                <content>
+                    Here is where we get your delicious money
+                </content>
+            </step>
+            <step>
+                <header>Finalize</header>
+                <content>
+                    Great! That's all we need.  Complete the transaction below and your workspaces will be immediately available.
+                    <toolbar>
+                        <tool class="success">
+                            Complete Transaction
+                        </tool>
+                        <tool class="warn" ng-click="$parent.$parent.upgrade = false">
+                            Cancel (I'm poor)
+                        </tool>
+                    </toolbar>
+                </content>
+            </step>
+        </stepped-process>
+</workspaces>

@@ -14,11 +14,18 @@
     #border-light;
     #bg-colorless;
 
+    &.active{
+      width: 292px;
+      border-right: solid 8px @tertiary;
+      i{
+        #bg-primary;
+      }
+    }
+
     &:hover, selected{
       #bg-lightest;
       #border-medium;
       i{
-        #bg-primary;
       }
     }
 

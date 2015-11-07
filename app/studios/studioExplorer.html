@@ -1,8 +1,8 @@
-<studio-explorer>
+<studio-explorer ng-class="{'show':$parent.showStudio == true}">
     <header>
         Studio Explorer
         <toolbar>
-            <tool>
+            <tool ng-click="$parent.showStudio = false">
                 <i class="fa fa-times-circle"></i>
             </tool>
         </toolbar>
@@ -23,7 +23,7 @@
                     <i class="fa fa-plus"></i> Add Aspect...
                 </item>
                 <item ng-repeat="entityDefinition in entityDefinitions">
-                    <i class="fa fa-file-o"></i>
+                    <i class="fa fa-file"></i>
                     {{entityDefinition.name}}
                 </item>
                 <folder>
@@ -31,9 +31,9 @@
                         <i class="fa fa-folder-open"></i>
                         Common Business Aspects
                     </header>
-                    <item><i class="fa fa-file-o"></i>Member</item>
-                    <item><i class="fa fa-file-o"></i>Event</item>
-                    <item><i class="fa fa-file-o"></i>Document</item>
+                    <item><i class="fa fa-file"></i>Member</item>
+                    <item><i class="fa fa-file"></i>Event</item>
+                    <item><i class="fa fa-file"></i>Document</item>
                 </folder>
             </folder>
         </tree>
