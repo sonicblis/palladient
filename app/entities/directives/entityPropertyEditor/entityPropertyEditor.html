@@ -17,7 +17,7 @@
     </thead>
     <tr ng-repeat="property in properties">
         <td>
-            <input ng-model="property.name" focus-when="$parent.$parent.step == 2">
+            <input ng-model="property.name" focus-when="justAdded">
         </td>
         <td>
             <select ng-options="type.value as type.display for type in types" ng-model="property.type" ng-init="property.type = property.type || 'string'"></select>
@@ -27,6 +27,25 @@
         </td>
         <td>
             <select ng-keydown="addAnotherIfTab($event)" ng-options="requiredOption for requiredOption in ['Yes','No']" ng-model="property.required" ng-init="property.required = property.required || 'Yes'"></select>
+            <row-tools class="ghost">
+                <tool ng-click="properties.splice(properties.indexOf(property), 1)">
+                    <i class="fa fa-times"></i>Remove
+                </tool>
+            </row-tools>
+        </td>
+    </tr>
+    <tr class="ghost" ng-click="properties.push({}); justAdded = true;">
+        <td>
+            <input>
+        </td>
+        <td>
+            <select ng-model="ignore" ng-options="type.value as type.display for type in types"></select>
+        </td>
+        <td>
+            <input size="10">
+        </td>
+        <td>
+            <select><option>Yes</option></select>
         </td>
     </tr>
 </table>

@@ -17,9 +17,9 @@
     <brand><img src="img/Phaethon%20Logo_Symbol.png">Palladient</brand>
     <user-tools>
         <span ng-show="user.authenticated">
-            <tool ui-sref="design" ui-sref-active="active">
-                Design</tool><tool ui-sref="configure" ui-sref-active="active">
-                Configure</tool><tool ui-sref="work" ui-sref-active="active">
+            <tool ng-show="user.studio" ui-sref="design" ui-sref-active="active">
+                Design</tool><tool ng-show="user.studio" ui-sref="configure" ui-sref-active="active">
+                Configure</tool><tool ng-show="user.studio" ui-sref="work" ui-sref-active="active">
                 Work</tool><tool drop-down drop-down-align="right">
                 <img ng-src="{{user.icon}}" />{{user.name}}
                 <drop-down-options>

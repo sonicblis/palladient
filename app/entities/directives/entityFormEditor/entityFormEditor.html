@@ -4,29 +4,29 @@
             {{property.name}}
         </td>
         <td>
-            <ng-include src="property.type | trimAfterColon"></ng-include>
+            <ng-include src="(property.type | trimAfterColon) + 'Designer'"></ng-include>
         </td>
     </tr>
 </table>
 
-<script type="text/ng-template" id="string">
+<script type="text/ng-template" id="stringDesigner">
     <input type="text" required="{{property.required}}" />
 </script>
-<script type="text/ng-template" id="bool">
+<script type="text/ng-template" id="boolDesigner">
     <div>
         <yes class="selected">Yes</yes><no>No</no>
     </div>
 </script>
-<script type="text/ng-template" id="datetime">
+<script type="text/ng-template" id="datetimeDesigner">
     <input type="date" required="{{property.required}}" />
 </script>
-<script type="text/ng-template" id="int">
+<script type="text/ng-template" id="intDesigner">
     <input type="number" required="{{property.required}}" />
 </script>
-<script type="text/ng-template" id="text">
+<script type="text/ng-template" id="textDesigner">
     <textarea required="{{property.required}}"></textarea>
 </script>
-<script type="text/ng-template" id="typeDefinition">
+<script type="text/ng-template" id="typeDefinitionDesigner">
     <select>
         <option>{{property.name}} 1</option>
         <option>{{property.name}} 2</option>

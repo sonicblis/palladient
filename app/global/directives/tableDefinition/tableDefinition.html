@@ -9,14 +9,14 @@
         There aren't any yet.  Use the button above to create one.
     </td>
 </tr>
-<tr ng-show="ngModel.length > 0" ng-repeat="rowData in ngModel | filter:filterWith" ng-click="rowData.selected = !rowData.selected" ng-class="{'selected':rowData.selected}">
+<tr ng-show="ngModel.length > 0" ng-repeat="rowData in ngModel | filter:filterWith" ng-click="rowData.$selected = !rowData.$selected" ng-class="{'selected':rowData.$selected}">
     <td>
-        <i class="fa" ng-class="{'fa-square-o':!rowData.selected,'fa-check-square-o':rowData.selected}"></i>
+        <i class="fa" ng-class="{'fa-square-o':!rowData.$selected,'fa-check-square-o':rowData.$selected}"></i>
     </td>
     <td ng-repeat="column in tableDefinition">
         <ng-include src="column.templateOption || 'value'"></ng-include>
-        <toolbar ng-if="$last">
-            <tool></tool>
+        <toolbar ng-click="$event.stopPropagation()" ng-if="!disableEdit && $last" class="ghost">
+            <tool ng-click="edit({item: rowData})"><i class="fa fa-pencil"></i>Edit</tool>
         </toolbar>
     </td>
 </tr>

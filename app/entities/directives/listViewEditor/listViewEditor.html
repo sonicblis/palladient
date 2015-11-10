@@ -1,0 +1,28 @@
+<column-definition>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    Display
+                </td>
+                <td>
+                    Property
+                </td>
+                <td>
+                    Header
+                </td>
+            </tr>
+        </thead>
+        <tr ng-repeat="entityProperty in properties">
+            <td>
+                <input ng-model="entityProperty.primaryListProperty" ng-click="setDefaultHeader(entityProperty)" type="checkbox" />
+            </td>
+            <td>
+                {{entityProperty.name}}
+            </td>
+            <td>
+                <input ng-model="entityProperty.headerText" ng-disabled="!entityProperty.primaryListProperty" />
+            </td>
+        </tr>
+    </table>
+</column-definition>

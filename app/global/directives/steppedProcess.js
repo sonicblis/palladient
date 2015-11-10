@@ -1,14 +1,20 @@
 app.directive("steppedProcess", [function () {
-    var _steps = [];
     return {
         restrict: 'E',
         transclude: true,
         template: "<ng-transclude></ng-transclude>",
         controller: ['$scope', function ($scope) {
-            this.steps = _steps;
+            this.steps = [];
         }],
-        link: function ($scope, $el, $attr) {
-
+        link: function ($scope, $el, $attr, controller) {
+            $scope.$on('reset', function(){
+                if (controller.steps && controller.steps.length > 0){
+                    controller.steps.forEach(function(step){
+                        step.removeClass('active');
+                    });
+                    controller.steps[0].addClass('active');
+                }
+            });
         }
     }
 }]);

@@ -4,7 +4,9 @@ app.directive("tableDefinition", ['$parse', function ($parse) {
         scope: {
             tableDefinition: '=',
             ngModel: '=',
-            filterWith: '='
+            filterWith: '=',
+            disableEdit: '=',
+            edit: '&onEdit'
         },
         require: 'ngModel',
         templateUrl: 'app/global/directives/tableDefinition/tableDefinition.html',

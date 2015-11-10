@@ -27,21 +27,43 @@ table.data-table{
       #bg-colorless;
     }
 
-    &.selected{
-      #bg-primary;
-      #text-colorless;
-    }
-
-    toolbar{
+    toolbar {
       position: absolute;
       right: 0;
       top: 0;
       bottom: 0;
-      width: 40px;
       #bg-colorless;
+      display: none;
+      transition: opacity .25s;
 
-      tool{
+      tool {
+        white-space: nowrap;
+        padding-right: 10px;
 
+        i{
+          #text-tertiary;
+          padding: 10px 7px;
+        }
+      }
+    }
+
+    &:hover{
+      toolbar{
+        display:block;
+      }
+    }
+
+    &.selected{
+      #bg-primary;
+      #text-colorless;
+
+      toolbar{
+        opacity: 1;
+        display: block;
+
+        tool{
+          #text-darkest;
+        }
       }
     }
 

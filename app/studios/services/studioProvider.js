@@ -63,7 +63,14 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
         _this.getStudio().then(function(userStudio){
             entityDefinition.studio = userStudio.$id;
             _this.getEntityDefinitions().then(function(entityDefinitions){
-                entityDefinitions.$add(entityDefinition);
+                if (entityDefinition.$id) { //existing, update it
+                    // entityDefinitions.$save didn't work here, I don't know why, didn't update and no error
+                    // I had to use .set but had to clean off all the angular $ sign stuff in order for it to work
+                    firebase.entityDefinitions.child(entityDefinition.$id).set(firebase.cleanAngularObject(entityDefinition));
+                }
+                else {
+                    entityDefinitions.$add(entityDefinition);
+                }
             });
         });
     };

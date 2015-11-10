@@ -20,7 +20,7 @@
                     Your new entities will be immediately available for anyone working in the workspace.
                 </hint>
                 <ul>
-                    <li ng-repeat="entityDefinition in publisher.entityDefinitions">{{entityDefinition.name}}</li>
+                    <li ng-repeat="entityDefinition in publisher.entityDefinitions track by $index">{{entityDefinition.name}}</li>
                 </ul>
             </span>
             <span ng-show="!publisher.selectedWorkspace">

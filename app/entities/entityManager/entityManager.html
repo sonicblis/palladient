@@ -1,0 +1,18 @@
+<entity-manager ng-controller="entityManagerController">
+    <table-tools>
+        <select ng-change="loadEntities()" ng-model="selectedDefinition" ng-options="entityDefinition.name for entityDefinition in entityDefinitions"></select>
+        <tool ng-click="editingEntity = true">
+            Add {{selectedDefinition.name}}
+        </tool>
+        <search-box class="right" ng-model="entityFilter"></search-box>
+    </table-tools>
+
+    <entity-form entity-definition="selectedDefinition" 
+                 ng-model="entity" 
+                 on-cancel="editingEntity = false"
+                 on-save="saveInstance(); editingEntity = false;"
+                 ng-show="editingEntity == true"
+                 fake-modal></entity-form>
+
+    <table ng-model="entityData" table-definition="tableDefinition" filter-with="entityFilter"></table>
+</entity-manager>

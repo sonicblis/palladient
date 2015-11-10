@@ -1,4 +1,4 @@
-<entity-definition-editor  ng-show="addingEntity" fake-modal>
+<entity-definition-editor>
     <stepped-process>
         <step class="active">
             <header>New Aspect Name</header>
@@ -26,7 +26,11 @@
         </step>
         <step>
             <header>{{entityDefinition.name}} In a List</header>
-            <content></content>
+            <content>
+                Which fields should we show in lists in general
+                <hint>You can provide additional list views later</hint>
+                <list-view-editor ng-model="entityDefinition.listDefinition" properties="entityDefinition.properties"></list-view-editor>
+            </content>
         </step>
         <step>
             <header>Complete</header>

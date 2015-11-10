@@ -1,8 +1,11 @@
-app.controller("entitiesController", ['$scope', 'studioProvider', function($scope, studioProvider){
+app.controller("entityDefinitionsController", ['$scope', 'studioProvider', function($scope, studioProvider){
     $scope.tableDefinition = [
         new columnDefinition('Name', 'name')
     ];
     $scope.publisher = {selectedWorkspace: null};
+    $scope.resetEditors = function(){
+        $scope.$broadcast('reset');
+    };
     $scope.studio = studioProvider.getStudio();
     studioProvider.getWorkspaces().then(function(workspaces){
         $scope.workspaces = workspaces;
@@ -11,8 +14,9 @@ app.controller("entitiesController", ['$scope', 'studioProvider', function($scop
         $scope.entityDefinitions = definitions;
     });
     $scope.entityDefinition = {properties: [{}]};
-    $scope.addEntityDefinition = function(){
+    $scope.showEntityEditor = function(){
         $scope.addingEntity = true;
+        $scope.resetEditors();
     };
     $scope.saveEntityDefinition = function(){
         studioProvider.saveEntityDefinition($scope.entityDefinition);
@@ -20,10 +24,9 @@ app.controller("entitiesController", ['$scope', 'studioProvider', function($scop
         $scope.entityDefinition = {properties: [{}]};
     };
     $scope.prepareForPublish = function(){
-        $scope.publisher.entityDefinitions = $scope.entityDefinitions.map(function(entityDefinition){
-            if (entityDefinition.selected){
-                return entityDefinition;
-            }
+        $scope.resetEditors();
+        $scope.publisher.entityDefinitions = $scope.entityDefinitions.filter(function(entityDefinition){
+            return entityDefinition.$selected;
         });
         $scope.publishing = true;
     };
@@ -35,5 +38,9 @@ app.controller("entitiesController", ['$scope', 'studioProvider', function($scop
         $scope.entityDefinition = {};
         $scope.publishing = false;
         $scope.addingEntity = false;
+    };
+    $scope.editDefinition = function(item){
+        $scope.entityDefinition = item;
+        $scope.showEntityEditor();
     };
 }]);

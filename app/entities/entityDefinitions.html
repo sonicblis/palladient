@@ -1,0 +1,16 @@
+<entities-list ng-controller="entityDefinitionsController">
+    <ng-include ng-show="addingEntity" fake-modal src="'app/entities/entityDefinitionEditor.html'"></ng-include>
+    <ng-include ng-show="publishing" fake-modal src="'app/entities/entityPublisher.html'"></ng-include>
+    <table-tools>
+        <tool ng-click="showEntityEditor()">Add Business Aspect</tool>
+        <tool drop-down class="primary">
+            Actions
+            <drop-down-options>
+                <option ng-click="prepareForPublish()">Publish</option>
+                <option>Delete</option>
+            </drop-down-options>
+        </tool>
+        <search-box class="right" ng-model="searchString"></search-box>
+    </table-tools>
+    <table ng-model="entityDefinitions" table-definition="tableDefinition" on-edit="editDefinition(item)" filter-with="searchString"></table>
+</entities-list>

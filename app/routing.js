@@ -7,11 +7,14 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider', function(
     $stateProvider
         .state('design', {
             url: "/design",
-            templateUrl: "app/studios/studio.html"
+            templateUrl: "app/studios/studio.html",
+            deepStateRedirect: {
+                default: { state: 'design.entity' }
+            }
         })
         .state('design.entity',{
             url: "/entity",
-            templateUrl: "app/entities/entities.html"
+            templateUrl: "app/entities/entityDefinitions.html"
         })
         .state('design.packages', {
             url: "/packages",
@@ -23,14 +26,14 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider', function(
         })
         .state('configure', {
             url: "/configure",
-            templateUrl: "app/workspaces/configure.html",
+            templateUrl: "app/configuration/configure.html",
             deepStateRedirect: {
-                default: { state: 'configure.workspaces' }
+                default: { state: 'configure.entities' }
             }
         })
-        .state('configure.workspaces', {
-            url: "/workspaces",
-            templateUrl: "app/workspaces/workspaceList.html"
+        .state('configure.entities', {
+            url: "/items",
+            templateUrl: "app/entities/entityManager/entityManager.html"
         })
         .state('configure.users', {
             url: "/users",

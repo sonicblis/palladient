@@ -1,0 +1,58 @@
+<stepped-process>
+    <step class="active">
+        <header>New {{entityDefinition.name}}</header>
+        <content>
+            <table>
+                <tr ng-repeat="property in entityDefinition.properties">
+                    <td>
+                        {{property.name}}:
+                    </td>
+                    <td>
+                        <ng-include src="(property.type | trimAfterColon)"></ng-include>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                    <td>
+                        <toolbar>
+                            <tool ng-click="save()" class="primary">
+                                Save
+                            </tool>
+                            <tool ng-click="cancel()" class="warn">
+                                Cancel
+                            </tool>
+                        </toolbar>
+                    </td>
+                </tr>
+            </table>
+        </content>
+    </step>
+</stepped-process>
+
+<script type="text/ng-template" id="string">
+    <input ng-model="ngModel[property.name]" type="text" required="{{property.required}}" />
+</script>
+<script type="text/ng-template" id="bool">
+    <div>
+        <yes ng-click="ngModel[property.name] = 'true'" ng-class="{'selected':ngModel[property.name] == 'true'}">Yes</yes>
+        <no ng-click="ngModel[property.name] = 'false'" ng-class="{'selected':ngModel[property.name] == 'true'}">No</no>
+    </div>
+</script>
+<script type="text/ng-template" id="datetime">
+    <input ng-model="ngModel[property.name]" type="date" required="{{property.required}}" />
+</script>
+<script type="text/ng-template" id="int">
+    <input ng-model="ngModel[property.name]" type="number" required="{{property.required}}" />
+</script>
+<script type="text/ng-template" id="text">
+    <textarea ng-model="ngModel[property.name]" required="{{property.required}}"></textarea>
+</script>
+<script type="text/ng-template" id="typeDefinition">
+    <select>
+        <option>{{property.name}} 1</option>
+        <option>{{property.name}} 2</option>
+        <option>{{property.name}} 3</option>
+    </select>
+</script>
