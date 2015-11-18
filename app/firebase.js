@@ -6,6 +6,7 @@ app.constant('firebase', {
     accounts: new Firebase(baseUrl + "/accounts"),
     studios: new Firebase(baseUrl + "/studios"),
     workspaces: new Firebase(baseUrl + "/workspaces"),
+    workspaceAccounts: new Firebase(baseUrl + "/workspaceAccounts"),
     workspaceEntityDefinitions: new Firebase(baseUrl + "/workspaceEntityDefinitions"),
     workspaceEntities: new Firebase(baseUrl + "/workspacesEntities"),
     packages: new Firebase(baseUrl + "/packages"),

@@ -37,11 +37,11 @@
 <script type="text/ng-template" id="bool">
     <div>
         <yes ng-click="ngModel[property.name] = 'true'" ng-class="{'selected':ngModel[property.name] == 'true'}">Yes</yes>
-        <no ng-click="ngModel[property.name] = 'false'" ng-class="{'selected':ngModel[property.name] == 'true'}">No</no>
+        <no ng-click="ngModel[property.name] = 'false'" ng-class="{'selected':ngModel[property.name] == 'false'}">No</no>
     </div>
 </script>
 <script type="text/ng-template" id="datetime">
-    <input ng-model="ngModel[property.name]" type="date" required="{{property.required}}" />
+    <input ng-model="ngModel[property.name]" type="date" date-as-int required="{{property.required}}" />
 </script>
 <script type="text/ng-template" id="int">
     <input ng-model="ngModel[property.name]" type="number" required="{{property.required}}" />
@@ -50,9 +50,5 @@
     <textarea ng-model="ngModel[property.name]" required="{{property.required}}"></textarea>
 </script>
 <script type="text/ng-template" id="typeDefinition">
-    <select>
-        <option>{{property.name}} 1</option>
-        <option>{{property.name}} 2</option>
-        <option>{{property.name}} 3</option>
-    </select>
+    <select ng-model="ngModel[property.name]" ng-options="entity.$id as getDisplayProperty(entity) for entity in availableEntities[property.type]"></select>
 </script>

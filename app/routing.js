@@ -38,5 +38,10 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider', function(
         .state('configure.users', {
             url: "/users",
             templateUrl: "app/users/userList.html"
-        });
+        })
+        .state('work', {
+            url: "/work",
+            templateUrl: "app/workspaces/workspace.html"
+        })
+    ;
 }]);

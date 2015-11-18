@@ -1,0 +1,74 @@
+@import '../../styles/colors';
+
+entities-list{
+  display: block;
+  padding: 10px;
+  overflow: auto;
+
+  tool-group{
+    margin-right: 10px;
+  }
+
+  entity-definition{
+    border-radius: 5px 5px 0 0;
+    #border-secondary;
+    display: block;
+    width: 250px;
+    height: 250px;
+    position: relative;
+
+    &.selected{
+      #border-primary;
+      transition: .25s;
+
+      header{
+        #bg-primary;
+        transition: .25s;
+      }
+    }
+
+    &.interesting{
+      #border-tertiary;
+      transition: .25s;
+
+      header{
+        #bg-tertiary;
+        transition: .25s;
+      }
+    }
+
+    header{
+      #bg-secondary;
+      #text-colorless;
+      font-weight: bold;
+      padding: 3px 8px;
+      font-size: 1.2em;
+      display: block;
+
+      i{
+        margin-top: 4px;
+      }
+    }
+
+    content{
+      display:inline-block;
+      padding: 5px;
+      overflow: auto;
+      position: absolute;
+      top: 33px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      #bg-lightest;
+      cursor: default;
+
+      label{
+        font-weight: bold;
+
+        &:after{
+          content: ':';
+        }
+      }
+    }
+  }
+}

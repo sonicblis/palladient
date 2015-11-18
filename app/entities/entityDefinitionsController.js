@@ -3,10 +3,12 @@ app.controller("entityDefinitionsController", ['$scope', 'studioProvider', funct
         new columnDefinition('Name', 'name')
     ];
     $scope.publisher = {selectedWorkspace: null};
+    $scope.ui = {interestingType: ''};
     $scope.resetEditors = function(){
         $scope.$broadcast('reset');
     };
     $scope.studio = studioProvider.getStudio();
+    $scope.view = 'list';
     studioProvider.getWorkspaces().then(function(workspaces){
         $scope.workspaces = workspaces;
     });
@@ -42,5 +44,13 @@ app.controller("entityDefinitionsController", ['$scope', 'studioProvider', funct
     $scope.editDefinition = function(item){
         $scope.entityDefinition = item;
         $scope.showEntityEditor();
+    };
+    $scope.deleteSelected = function(){
+        var selectedDefinitions = $scope.entityDefinitions.filter(function(definition){
+            return definition.$selected
+        });
+        selectedDefinitions.forEach(function(definition){
+            $scope.entityDefinitions.$remove(definition)
+        });
     };
 }]);

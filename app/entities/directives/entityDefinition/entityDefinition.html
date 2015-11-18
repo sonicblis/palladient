@@ -1,0 +1,9 @@
+<header>
+    {{entityDefinition.name}}
+    <i ng-click="$event.stopPropagation(); edit({item: entityDefinition})" class="ghost right fa fa-pencil"></i>
+</header>
+<content>
+    <div ng-repeat="property in entityDefinition.properties">
+        <label>{{property.name}}</label> <span ng-mouseover="$parent.type = typeNameFromPropertyType(property).value">{{typeNameFromPropertyType(property).value}}</span>
+    </div>
+</content>

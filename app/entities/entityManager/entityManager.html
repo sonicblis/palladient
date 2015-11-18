@@ -4,6 +4,12 @@
         <tool ng-click="editingEntity = true">
             Add {{selectedDefinition.name}}
         </tool>
+        <tool drop-down class="primary">
+            Actions
+            <drop-down-options>
+                <option ng-click="deleteSelected()">Delete</option>
+            </drop-down-options>
+        </tool>
         <search-box class="right" ng-model="entityFilter"></search-box>
     </table-tools>
 
@@ -14,5 +20,5 @@
                  ng-show="editingEntity == true"
                  fake-modal></entity-form>
 
-    <table ng-model="entityData" table-definition="tableDefinition" filter-with="entityFilter"></table>
+    <table ng-model="entityData" table-definition="tableDefinition" on-edit="edit(item)" filter-with="entityFilter"></table>
 </entity-manager>

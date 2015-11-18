@@ -1,6 +1,7 @@
 <table>
     <thead>
         <tr>
+            <td></td>
             <td>
                 Name
             </td>
@@ -16,6 +17,9 @@
         </tr>
     </thead>
     <tr ng-repeat="property in properties">
+        <td>
+            <input title="show this property in lists" type="checkbox" checkbox-group="$parent.displayPropertyName" checkbox-group-value="property.name">
+        </td>
         <td>
             <input ng-model="property.name" focus-when="justAdded">
         </td>
@@ -35,6 +39,9 @@
         </td>
     </tr>
     <tr class="ghost" ng-click="properties.push({}); justAdded = true;">
+        <td>
+            <input type="checkbox" disabled="disabled">
+        </td>
         <td>
             <input>
         </td>

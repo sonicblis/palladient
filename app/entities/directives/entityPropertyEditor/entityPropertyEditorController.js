@@ -2,7 +2,8 @@ app.directive("entityPropertyEditor", ['studioProvider', function (studioProvide
     return {
         restrict: 'E',
         scope: {
-            properties: '=ngModel'
+            properties: '=ngModel',
+            displayPropertyName: '='
         },
         templateUrl: 'app/entities/directives/entityPropertyEditor/entityPropertyEditor.html',
         controller: ['$scope', function ($scope) {

@@ -1,16 +1,29 @@
 <entities-list ng-controller="entityDefinitionsController">
-    <ng-include ng-show="addingEntity" fake-modal src="'app/entities/entityDefinitionEditor.html'"></ng-include>
-    <ng-include ng-show="publishing" fake-modal src="'app/entities/entityPublisher.html'"></ng-include>
+    <ng-include ng-show="addingEntity" fake-modal src="'app/entities/includes/entityDefinitionEditor.html'"></ng-include>
+    <ng-include ng-show="publishing" fake-modal src="'app/entities/includes/entityPublisher.html'"></ng-include>
     <table-tools>
         <tool ng-click="showEntityEditor()">Add Business Aspect</tool>
         <tool drop-down class="primary">
             Actions
             <drop-down-options>
                 <option ng-click="prepareForPublish()">Publish</option>
-                <option>Delete</option>
+                <option ng-click="deleteSelected()">Delete</option>
             </drop-down-options>
         </tool>
         <search-box class="right" ng-model="searchString"></search-box>
+        <tool-group class="right">
+            <tool ng-click="view = 'list'" ng-class="{'default':view != 'list', 'primary': view == 'list'}">
+                <i class="fa fa-align-justify"></i>
+            </tool>
+            <tool ng-click="view = 'grid'" ng-class="{'default':view != 'grid', 'primary': view == 'grid'}">
+                <i class="fa fa-th"></i>
+            </tool>
+        </tool-group>
     </table-tools>
-    <table ng-model="entityDefinitions" table-definition="tableDefinition" on-edit="editDefinition(item)" filter-with="searchString"></table>
+    <table ng-show="view == 'list'" ng-model="entityDefinitions" table-definition="tableDefinition" on-edit="editDefinition(item)" filter-with="searchString"></table>
+    <grid ng-show="view == 'grid'">
+        <grid-item ng-repeat="entityDefinition in entityDefinitions">
+            <entity-definition on-edit="editDefinition(item)" ng-click="entityDefinition.$selected = !entityDefinition.$selected" type-indicator="ui.interestingType" ng-class="{'selected':entityDefinition.$selected, 'interesting':ui.interestingType == entityDefinition.name}" ng-model="entityDefinition"></entity-definition>
+        </grid-item>
+    </grid>
 </entities-list>

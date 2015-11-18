@@ -1,7 +1,7 @@
 <entity-definition-editor>
     <stepped-process>
         <step class="active">
-            <header>New Aspect Name</header>
+            <header>{{entityDefinition.$id ? 'Edit' : 'Add'}} Entity Definition Name</header>
             <content>
                 What is the name of the Business Aspect?<br />
                 <hint>This could be something like 'Order' or 'Customer'.  Something that is a part of getting your work done.</hint>
@@ -13,7 +13,7 @@
             <content>
                 What properties does this Aspect have?
                 <hint>These are the things that describe your aspect.  Things like 'amount' and 'quantity' for an Order would be added here.</hint>
-                <entity-property-editor ng-enter="step = 3" ng-model="entityDefinition.properties"></entity-property-editor>
+                <entity-property-editor ng-enter="step = 3" display-property-name="entityDefinition.displayProperty" ng-model="entityDefinition.properties"></entity-property-editor>
             </content>
         </step>
         <step>
@@ -39,7 +39,7 @@
                 <hint>Once you've saved your new Aspect, users will be able to start creating them</hint>
                 <toolbar>
                     <tool class="primary" ng-click="saveEntityDefinition()">
-                        Save
+                        {{entityDefinition.$id ? 'Update' : 'Create'}}
                     </tool>
                     <tool class="warn" ng-click="cancel()">
                         Cancel

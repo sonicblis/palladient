@@ -19,7 +19,7 @@
         <span ng-show="user.authenticated">
             <tool ng-show="user.studio" ui-sref="design" ui-sref-active="active">
                 Design</tool><tool ng-show="user.studio" ui-sref="configure" ui-sref-active="active">
-                Configure</tool><tool ng-show="user.studio" ui-sref="work" ui-sref-active="active">
+                Configure</tool><tool ng-show="user.studio || user.$workspace" ui-sref="work" ui-sref-active="active">
                 Work</tool><tool drop-down drop-down-align="right">
                 <img ng-src="{{user.icon}}" />{{user.name}}
                 <drop-down-options>
@@ -33,8 +33,9 @@
     </user-tools>
 </header>
 <content>
-    <div ng-if="user.$id && !user.studio" ng-include="'app/licensePlans/licensePlanSelector.html'"></div>
-    <div ng-if="user.$id && user.studio" ui-view></div>
+    <div ng-if="user.$id && !user.studio && !user.$workspaces" ng-include="'app/licensePlans/licensePlanSelector.html'"></div>
+    <div ng-if="user.$id && !user.studio && user.$workspaces && !user.$workspace" ng-include="'app/workspaces/workspaceSelector.html'"></div>
+    <div ng-if="user.$id && (user.studio || user.$workspace)" ui-view></div>
 </content>
 </body>
 </html>

@@ -4,18 +4,20 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
     var entityDefinitionRef = null;
     var studioLoaded = false;
 
+    this.workspaceDefinitions = {};
     this.getStudio = function () {
         var deferred = $q.defer();
-        if (!studioLoaded) {
+        if (!studio) {
             var userStudioRef = firebase.studios.child($rootScope.user.studio);
-            studio = $firebaseObject(userStudioRef).$loaded(function (loadedStudio) {
-                studio = loadedStudio;
-                studioLoaded = true;
+            studio = $firebaseObject(userStudioRef);
+            studio.$loaded(function (loadedStudio) {
                 deferred.resolve(loadedStudio);
             });
         }
         else {
-            deferred.resolve(studio);
+            studio.$loaded(function(){
+                deferred.resolve(studio);
+            });
         }
         return deferred.promise;
     };
@@ -23,13 +25,24 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
         var deferred = $q.defer();
         if (!_this.entityDefinitions){
             _this.getStudio().then(function (loadedStudio) {
-                entityDefinitionRef = firebase.entityDefinitions.orderByChild('studio').equalTo(loadedStudio.$id)
+                entityDefinitionRef = firebase.entityDefinitions.orderByChild('studio').equalTo(loadedStudio.$id);
                 _this.entityDefinitions = $firebaseArray(entityDefinitionRef);
                 deferred.resolve(_this.entityDefinitions);
             });
         }
         else{
             deferred.resolve(_this.entityDefinitions);
+        }
+        return deferred.promise;
+    };
+    this.getWorspaceEntityDefinitions = function(workspaceId){
+        var deferred = $q.defer();
+        if (!_this.workspaceDefinitions[workspaceId]){
+            _this.workspaceDefinitions[workspaceId] = $firebaseArray(firebase.workspaceEntityDefinitions.orderByChild('workspace').equalTo(workspaceId));
+            deferred.resolve(_this.workspaceDefinitions[workspaceId]);
+        }
+        else{
+            deferred.resolve(_this.workspaceDefinitions[workspaceId]);
         }
         return deferred.promise;
     };
@@ -85,12 +98,13 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
     };
     this.publishEntities = function(publishInfo){
         publishInfo.entityDefinitions.forEach(function(entityDefinition){
+            var cleanedEntityDefinition = firebase.cleanAngularObject(entityDefinition);
             firebase.workspaceEntityDefinitions.child(entityDefinition.$id).set({
                 workspace: publishInfo.selectedWorkspace.$id,
                 name: entityDefinition.name,
-                properties: entityDefinition.properties
+                properties: cleanedEntityDefinition.properties
             });
-            delete entityDefinition.selected;
+            delete entityDefinition.$selected;
         });
     };
 }]);
