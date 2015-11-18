@@ -26,7 +26,7 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider', function(
         })
         .state('configure', {
             url: "/configure",
-            templateUrl: "app/configuration/configure.html",
+            templateUrl: "app/configure/configure.html",
             deepStateRedirect: {
                 default: { state: 'configure.entities' }
             }
