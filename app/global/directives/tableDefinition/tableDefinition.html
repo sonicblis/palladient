@@ -22,14 +22,14 @@
 </tr>
 
 <script type="text/ng-template" id="stringDisplay">
-    {{rowData[column.propertyName]}}
+    {{getValue(rowData, column.propertyName)}}
 </script>
 <script type="text/ng-template" id="boolDisplay">
-    {{((rowData[column.propertyName] || 'false') == 'false') ? 'No' : 'Yes'}}
+    {{((getValue(rowData, column.propertyName) || 'false') == 'false') ? 'No' : 'Yes'}}
 </script>
 <script type="text/ng-template" id="intDisplay">
-    {{rowData[column.propertyName]}}
+    {{getValue(rowData, column.propertyName)}}
 </script>
 <script type="text/ng-template" id="datetimeDisplay">
-    {{rowData[column.propertyName] | date:"MMM d"}}
+    {{getValue(rowData, column.propertyName) | date:"MMM d"}}
 </script>

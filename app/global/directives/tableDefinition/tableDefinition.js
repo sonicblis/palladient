@@ -19,6 +19,14 @@ app.directive("tableDefinition", ['$parse', 'entityProvider', function ($parse, 
                     return propertyType;
                 }
             };
+            $scope.getValue = function(data, propertyIdentifier){
+                var propertyChain = propertyIdentifier.split('.');
+                var value = data;
+                propertyChain.forEach(function(p){
+                    value = value[p];
+                });
+                return value;
+            }
         }],
         link: function ($scope, $el, $attr) {
             $el.addClass('data-table');

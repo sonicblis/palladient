@@ -1,6 +1,7 @@
-app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 'firebase', '$state', function($rootScope, $firebaseObject, $firebaseArray, firebase, $state) {
+app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 'firebase', '$state', '$q', function($rootScope, $firebaseObject, $firebaseArray, firebase, $state, $q) {
     //local
     var _this = this;
+    var userWorkspaceDetails = {};
     var userInfo = function(authData){
         this.name = authData.google.displayName;
         this.id = authData.uid;
@@ -68,6 +69,23 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
         if (auth) {
             loadUser(auth);
         }
+    };
+    this.getUserWorkspaceDetails = function(userWorkspaceInfo){
+        var deferred = $q.defer();
+        if (!userWorkspaceDetails[userWorkspaceInfo.$id]) {
+            userWorkspaceDetails[userWorkspaceInfo.$id] = {
+                userName: $firebaseObject(firebase.accounts.child(userWorkspaceInfo.$id).child('name')),
+                workspace: $firebaseObject(firebase.workspaces.child(userWorkspaceInfo.workspace).child('name'))
+            };
+        }
+        var promises = [
+            userWorkspaceDetails[userWorkspaceInfo.$id].userName.$loaded(),
+            userWorkspaceDetails[userWorkspaceInfo.$id].workspace.$loaded()
+        ];
+        $q.all(promises).then(function(){
+            deferred.resolve(userWorkspaceDetails[userWorkspaceInfo.$id]);
+        });
+        return deferred.promise;
     };
     this.userRef = null;
 }]);

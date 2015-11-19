@@ -1,3 +1,9 @@
 <user-list ng-controller="userListController">
-    <div ng-repeat="user in users">{{user.workspace}}</div>
+    <table-tools>
+        <tool>
+            Add User
+        </tool>
+        <search-box class="right" ng-model="memberFilter"></search-box>
+    </table-tools>
+    <table ng-model="userDetails" table-definition="tableDefinition" filter-with="memberFilter"></table>
 </user-list>
