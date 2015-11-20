@@ -1,4 +1,4 @@
-app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 'firebase', '$state', '$q', function($rootScope, $firebaseObject, $firebaseArray, firebase, $state, $q) {
+app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 'firebase', '$state', '$q', 'logProvider', function($rootScope, $firebaseObject, $firebaseArray, firebase, $state, $q, logProvider) {
     //local
     var _this = this;
     var userWorkspaceDetails = {};
@@ -19,19 +19,20 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
 
     function loadUser(user){
         //hook up the current user's ref
-       _this.userRef = firebase.accounts.child(user.uid);
+        _this.userRef = firebase.accounts.child(user.uid);
         $rootScope.user = $firebaseObject(_this.userRef);
 
         //update the user's info
         var _userInfo = new userInfo(user);
-        _this.userRef.update(_userInfo, function(){
-            getUserWorkspaces(_userInfo.id);
-        });
+        getUserWorkspaces(_userInfo.id);
+        logProvider.info('userProvider', 'updating user information', _userInfo);
+        _this.userRef.update(_userInfo);
     }
-
     function getUserWorkspaces(userId){
+        logProvider.info('userProvider', 'getting workspaces for user', $rootScope.user)
         $rootScope.user.$workspaces = $firebaseArray(firebase.workspaceAccounts.orderByKey().equalTo(userId));
         $rootScope.user.$workspaces.$loaded(function(workspaces){
+            logProvider.info('userProvider', '    workspaces loaded');
             if (workspaces.length == 1){ //load the single workspace by default
                 $rootScope.user.$workspace = $firebaseObject(firebase.workspaces.child(workspaces[0].workspace));
                 if (!$rootScope.user.studio) {
@@ -42,12 +43,21 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
     }
 
     //exposed
+    this.getCurrentUserWorkspace = function(){
+        var deferred = $q.defer();
+        $rootScope.user.$workspaces.$loaded(function(){
+            $rootScope.user.$workspace.$loaded(function(workspace){
+                deferred.resolve(workspace);
+            })
+        });
+        return deferred.promise;
+    };
     this.getStudioUsers = function(){
         if ($rootScope.user.studio){
             return $firebaseArray(firebase.workspaceAccounts.orderByChild('studio').equalTo($rootScope.user.studio));
         }
         else{
-            console.warn('You don\'t have a studio to load users from');
+            return $firebaseArray(firebase.workspaceAccounts.orderByChild('studio').equalTo($rootScope.user.$workspace.studio));
         }
     };
     this.logout = function(){

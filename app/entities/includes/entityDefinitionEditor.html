@@ -3,9 +3,19 @@
         <step class="active">
             <header>{{entityDefinition.$id ? 'Edit' : 'Add'}} Entity Definition Name</header>
             <content>
-                What is the name of the Business Aspect?<br />
+                What is the name of the Entity Definition?<br />
                 <hint>This could be something like 'Order' or 'Customer'.  Something that is a part of getting your work done.</hint>
-                <input ng-model="entityDefinition.name" ng-enter="step = 2" />
+                <input ng-model="entityDefinition.name" />
+                Describe this Entity Definition<br />
+                <textarea ng-model="entityDefinition.description"></textarea>
+            </content>
+        </step>
+        <step>
+            <header>{{entityDefinition.name}} Scheduling</header>
+            <content>
+                Does this type of item allow scheduling?
+                <hint>When this is checked, you can allow members to create a calendar event associated with items of this type</hint>
+                <yes-no ng-model="entityDefinition.supportsScheduling"></yes-no>
             </content>
         </step>
         <step>

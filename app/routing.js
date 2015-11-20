@@ -43,5 +43,9 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider', function(
             url: "/work",
             templateUrl: "app/workspaces/workspace.html"
         })
+        .state('configure.events', {
+            url: "/events",
+            templateUrl: "app/calendar/events.html"
+        })
     ;
 }]);

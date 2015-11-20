@@ -1,0 +1,68 @@
+@import '../../../../styles/colors';
+
+.calendar-table{
+  border-collapse: collapse;
+  #border-light;
+  #bg-lightest;
+  width: calc(~'100% - 320px');
+
+  th{
+    #bg-colorless;
+    font-size: 1.3em;
+    border-bottom: solid 1px @light;
+    padding: 10px 0;
+
+    .prevmonth, .nextmonth{
+      cursor: pointer;
+      padding: 0 10px;
+    }
+
+    .prevmonth{
+      float: left;
+    }
+
+    .nextmonth{
+      float: right;
+    }
+  }
+
+  .day-names{
+    td{
+      font-weight: bold;
+      text-align: center;
+      width: calc(100%/7);
+      #bg-colorless;
+    }
+  }
+  .past, .today, .day{
+    #border-light;
+    height: 120px;
+    position: relative;
+    #bg-colorless;
+
+    .number{
+      position: absolute;
+      top: 3px;
+      right: 3px;
+    }
+  }
+  .past{
+    #bg-lightest;
+  }
+  .today{
+    #text-colorless;
+    #bg-tertiary;
+  }
+
+  .selected-day{
+    .number{
+      #border-primary;
+      #bg-secondary;
+      #text-colorless;
+      text-align: center;
+      width: 30px;
+      height: 22px;
+      border-radius: 10px;
+    }
+  }
+}

@@ -9,32 +9,77 @@ app.directive("entityForm", [function () {
             onSave: '&'
         },
         templateUrl: 'app/entities/directives/entityForm/entityForm.html',
-        controller: ['$scope', 'entityProvider', 'studioProvider', function ($scope, entityProvider, studioProvider) {
+        controller: ['$scope', 'entityProvider', 'userProvider', 'workspaceProvider', 'logProvider', '$q', function ($scope, entityProvider, userProvider, workspaceProvider, logProvider, $q) {
             $scope.availableEntities = {};
-            studioProvider.getEntityDefinitions().then(function(definitions){
-                $scope.entityDefinitions = definitions;
+
+            function ensureEntitiesForType(type){
+                var deferred = $q.defer();
+                if (!$scope.availableEntities[type]){
+                    entityProvider.getEntities(type).then(function(entities){
+                        logProvider.debug('entityForm', 'getEntities returned', entities);
+                        $scope.availableEntities[type] = entities;
+                        deferred.resolve(entities);
+                    });
+                }
+                else{
+                    deferred.resolve($scope.availableEntities[type]);
+                }
+                return deferred.promise;
+            };
+
+            userProvider.getCurrentUserWorkspace().then(function(workspace){
+                workspaceProvider.getEntityDefinitions(workspace.$id).then(function(definitions){
+                    $scope.entityDefinitions = definitions;
+                });
             });
+
             $scope.getDisplayProperty = function(entity){
-                //get the right definition for the entity
-                var relevantDefinition = $scope.entityDefinitions.find(function(entityDefinition){
-                    if (entityDefinition.$id == entity.fromDefinition){
-                        return entityDefinition;
+                if (!entity.$dropdownDisplay) {
+                    logProvider.info('entityForm', 'getting drop down display for', entity);
+                    //get the right definition for the entity
+                    var relevantDefinition = $scope.entityDefinitions.find(function (entityDefinition) {
+                        return entityDefinition.$id == entity.fromDefinition;
+                    });
+                    if (relevantDefinition && !relevantDefinition.displayProperty) {
+                        logProvider.error('entityForm', 'The type definition has no display properties.  Display properties need to be selected and published for this entity type.', relevantDefinition);
+                        return;
                     }
-                });
+                    //pass back the property value of the entity
+                    var propertyValues = [];
+                    relevantDefinition.displayProperty.forEach(function (propertyName) {
+                        var propertyValue = entity[propertyName];
+                        logProvider.info('entityForm', 'adding drop down value for "' + propertyName + '"', propertyValue);
 
-                //pass back the property value of the entity
-                var propertyValues = [];
-                relevantDefinition.displayProperty.forEach(function(propertyName){
-                    propertyValues.push(entity[propertyName]);
-                });
+                        if (entityProvider.isValueEntityReference(propertyValue)){
+                            logProvider.info('entityForm', 'need to resolve drop down value from entity id', propertyValue);
+                            var propertyDefinition = relevantDefinition.properties.find(function(propertyDefinition){ return propertyDefinition.name == propertyName; });
+                            ensureEntitiesForType(propertyDefinition.type).then(function(entitiesForType){
+                                entitiesForType.$loaded().then(function(){
+                                    var entityOfInterest = entitiesForType.$getRecord(entityProvider.getEntityIdFromPropertyValue(propertyValue));
+                                    //this is going to jack order if there's more than one resolved property, I think
+                                    propertyValues.splice(0, 0, $scope.getDisplayProperty(entityOfInterest));
+                                    entity.$dropdownDisplay = propertyValues.join(' ');
+                                });
+                            });
+                        }
+                        else {
+                            propertyValues.push(propertyValue);
+                        }
 
-                return propertyValues.join(' ');
+                    });
+
+                    entity.$dropdownDisplay = propertyValues.join(' ');
+                }
+                else{
+                    logProvider.info('entityForm', 'drop down display property already calculated as', entity.$dropdownDisplay);
+                }
+                return entity.$dropdownDisplay;
             };
             $scope.$watch('entityDefinition', function(newVal){
                 if (newVal && newVal.properties){
                     newVal.properties.forEach(function(property){
-                        if (property.type.indexOf('typeDefinition:') > -1){
-                            $scope.availableEntities[property.type] = entityProvider.getEntities(property.type);
+                        if (entityProvider.isEntityTypeProperty(property)){
+                            ensureEntitiesForType(property.type);
                         }
                     });
                 }
@@ -48,12 +93,8 @@ app.directive("entityForm", [function () {
                 $scope.ngModel = {};
             }
         }],
-        link: function ($scope, $el, $attr, ngModel) {
-            ngModel.$parsers.push(
-                function(val){
-                    return val;
-                }
-            );
+        link: function ($scope, $el, $attr) {
+
         }
     }
 }]);

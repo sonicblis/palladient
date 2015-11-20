@@ -2,9 +2,7 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
     var _this = this;
     var studio = null;
     var entityDefinitionRef = null;
-    var studioLoaded = false;
 
-    this.workspaceDefinitions = {};
     this.getStudio = function () {
         var deferred = $q.defer();
         if (!studio) {
@@ -35,17 +33,7 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
         }
         return deferred.promise;
     };
-    this.getWorspaceEntityDefinitions = function(workspaceId){
-        var deferred = $q.defer();
-        if (!_this.workspaceDefinitions[workspaceId]){
-            _this.workspaceDefinitions[workspaceId] = $firebaseArray(firebase.workspaceEntityDefinitions.orderByChild('workspace').equalTo(workspaceId));
-            deferred.resolve(_this.workspaceDefinitions[workspaceId]);
-        }
-        else{
-            deferred.resolve(_this.workspaceDefinitions[workspaceId]);
-        }
-        return deferred.promise;
-    };
+
     this.getWorkspaces = function(){
         var workspaces = $q.defer();
         if (!_this.workspaces) {
@@ -102,7 +90,8 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
             firebase.workspaceEntityDefinitions.child(entityDefinition.$id).set({
                 workspace: publishInfo.selectedWorkspace.$id,
                 name: entityDefinition.name,
-                properties: cleanedEntityDefinition.properties
+                properties: cleanedEntityDefinition.properties,
+                displayProperty: cleanedEntityDefinition.displayProperty
             });
             delete entityDefinition.$selected;
         });

@@ -1,0 +1,27 @@
+@import '../../styles/colors';
+
+events{
+  overflow: auto;
+  display: block;
+  padding: 10px;
+
+  day{
+    float: right;
+    position: absolute;
+    top: 52px;
+    right: 10px;
+    width: 310px;
+    height: calc(~'100vh - 119px');
+
+    #border-light;
+
+    header{
+      padding: 10px;
+      #bg-lightest;
+      #text-dark;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: solid 1px @light;
+    }
+  }
+}

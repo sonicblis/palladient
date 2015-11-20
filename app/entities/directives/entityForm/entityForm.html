@@ -36,8 +36,7 @@
 </script>
 <script type="text/ng-template" id="bool">
     <div>
-        <yes ng-click="ngModel[property.name] = 'true'" ng-class="{'selected':ngModel[property.name] == 'true'}">Yes</yes>
-        <no ng-click="ngModel[property.name] = 'false'" ng-class="{'selected':ngModel[property.name] == 'false'}">No</no>
+        <yes-no ng-model="ngModel[property.name]"></yes-no>
     </div>
 </script>
 <script type="text/ng-template" id="datetime">
@@ -50,5 +49,5 @@
     <textarea ng-model="ngModel[property.name]" required="{{property.required}}"></textarea>
 </script>
 <script type="text/ng-template" id="typeDefinition">
-    <select ng-model="ngModel[property.name]" ng-options="entity.$id as getDisplayProperty(entity) for entity in availableEntities[property.type]"></select>
+    <select ng-model="ngModel[property.name]" ng-options="'entity:' + entity.$id as getDisplayProperty(entity) for entity in availableEntities[property.type]"></select>
 </script>
