@@ -1,16 +1,24 @@
 @import '../../../../styles/colors';
 
-yes, no{
+yes-no {
   display: inline-block;
-  padding: 7px 10px;
-  #border-light;
-  #bg-colorless;
-  cursor: pointer;
 
-  &.selected{
-    .primary;
+  &:not(last-child){
+    margin-bottom: 15px;
   }
-}
-no{
-  border-left: 0;
+
+  yes, no {
+    display: inline-block;
+    padding: 7px 10px;
+    #border-light;
+    #bg-colorless;
+    cursor: pointer;
+
+    &.selected {
+      .primary;
+    }
+  }
+  no {
+    border-left: 0;
+  }
 }

@@ -5,6 +5,7 @@ app.constant('firebase', {
     licensePlans: new Firebase(baseUrl + "/licenseplans"),
     accounts: new Firebase(baseUrl + "/accounts"),
     studios: new Firebase(baseUrl + "/studios"),
+    calendarEvents: new Firebase(baseUrl + "/events"),
     workspaces: new Firebase(baseUrl + "/workspaces"),
     workspaceAccounts: new Firebase(baseUrl + "/workspaceAccounts"),
     workspaceEntityDefinitions: new Firebase(baseUrl + "/workspaceEntityDefinitions"),

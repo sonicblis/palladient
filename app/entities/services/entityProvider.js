@@ -70,6 +70,20 @@ app.service("entityProvider", ['firebase', '$firebaseArray', 'studioProvider', '
         });
         entity.$resolved = true;
     }
+    function ensureEntitiesForType(type){
+        var deferred = $q.defer();
+        if (!childEntities[type]){
+            _this.getEntities(type).then(function(entities){
+                logProvider.debug('entityForm', 'getEntities returned', entities);
+                childEntities[type] = entities;
+                deferred.resolve(entities);
+            });
+        }
+        else{
+            deferred.resolve(childEntities[type]);
+        }
+        return deferred.promise;
+    };
 
     this.getEntities = function(entityDefinitionId, resolveChildren){
         var deferred = $q.defer();
@@ -134,6 +148,48 @@ app.service("entityProvider", ['firebase', '$firebaseArray', 'studioProvider', '
             }
         });
         return columnDefinitions;
+    };
+    this.getEntityDisplayName = function(entity){
+        if (!entity.$dropdownDisplay) {
+            logProvider.info('entityForm', 'getting drop down display for', entity);
+            //get the right definition for the entity
+            var relevantDefinition = entityDefinitions.find(function (entityDefinition) {
+                return entityDefinition.$id == entity.fromDefinition;
+            });
+            if (relevantDefinition && !relevantDefinition.displayProperty) {
+                logProvider.error('entityForm', 'The type definition has no display properties.  Display properties need to be selected and published for this entity type.', relevantDefinition);
+                return;
+            }
+            //pass back the property value of the entity
+            var propertyValues = [];
+            relevantDefinition.displayProperty.forEach(function (propertyName) {
+                var propertyValue = entity[propertyName];
+                logProvider.info('entityForm', 'adding drop down value for "' + propertyName + '"', propertyValue);
+
+                if (_this.isValueEntityReference(propertyValue)){
+                    logProvider.info('entityForm', 'need to resolve drop down value from entity id', propertyValue);
+                    var propertyDefinition = relevantDefinition.properties.find(function(propertyDefinition){ return propertyDefinition.name == propertyName; });
+                    ensureEntitiesForType(propertyDefinition.type).then(function(entitiesForType){
+                        entitiesForType.$loaded().then(function(){
+                            var entityOfInterest = entitiesForType.$getRecord(_this.getEntityIdFromPropertyValue(propertyValue));
+                            //this is going to jack order if there's more than one resolved property, I think
+                            propertyValues.splice(0, 0, _this.getEntityDisplayName(entityOfInterest));
+                            //need to update the property since we're in a promise resolution and the main thread has returned
+                            entity.$dropdownDisplay = propertyValues.join(' ');
+                        });
+                    });
+                }
+                else {
+                    propertyValues.push(propertyValue);
+                }
+
+            });
+            entity.$dropdownDisplay = propertyValues.join(' ');
+        }
+        else{
+            logProvider.info('entityForm', 'drop down display property already calculated as', entity.$dropdownDisplay);
+        }
+        return entity.$dropdownDisplay;
     };
 
     //init

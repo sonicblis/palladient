@@ -39,22 +39,54 @@
     height: 120px;
     position: relative;
     #bg-colorless;
+    vertical-align: top;
 
     .number{
       position: absolute;
-      top: 3px;
+      bottom: 3px;
       right: 3px;
+      z-index: 11;
+    }
+
+    calendar-event{
+      display: inline-block;
+      position: absolute;
+      overflow: hidden;
+      #border-primary;
+      #bg-secondary;
+      #text-colorless;
+      z-index: 9;
+      transition: top .25s, bottom .25s, left .25s, right .25s;
+      cursor: pointer;
+
+      content{
+        display: none;
+      }
+
+      &:hover{
+        transition: .5s;
+        transition-delay: 1s;
+        top: 2px !important;
+        bottom: 2px !important;
+        left: 2px !important;
+        right: 2px !important;
+        height: auto;
+        z-index: 10;
+
+        content{
+          display: block;
+          padding: 5px;
+          header{
+            font-weight: bold;
+          }
+        }
+      }
     }
   }
   .past{
     #bg-lightest;
   }
   .today{
-    #text-colorless;
-    #bg-tertiary;
-  }
-
-  .selected-day{
     .number{
       #border-primary;
       #bg-secondary;
@@ -64,5 +96,11 @@
       height: 22px;
       border-radius: 10px;
     }
+  }
+
+  .selected-day{
+    #text-colorless;
+    #bg-tertiary;
+
   }
 }

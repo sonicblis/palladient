@@ -6,3 +6,6 @@ var columnDefinition = function(headerText, propertyName, templateOption){
 var templateOptions = {
     date: 'date'
 };
+var broadcastMessages = {
+    resetEditor: 'reset-editor'
+}

@@ -97,5 +97,8 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
         });
         return deferred.promise;
     };
+    this.getCurrentUser = function() {
+        return $rootScope.user;
+    } ;
     this.userRef = null;
 }]);

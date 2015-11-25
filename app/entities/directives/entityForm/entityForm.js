@@ -58,6 +58,7 @@ app.directive("entityForm", [function () {
                                     var entityOfInterest = entitiesForType.$getRecord(entityProvider.getEntityIdFromPropertyValue(propertyValue));
                                     //this is going to jack order if there's more than one resolved property, I think
                                     propertyValues.splice(0, 0, $scope.getDisplayProperty(entityOfInterest));
+                                    //need to update the property since we're in a promise resolution and the main thread has returned
                                     entity.$dropdownDisplay = propertyValues.join(' ');
                                 });
                             });

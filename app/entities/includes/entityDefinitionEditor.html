@@ -15,7 +15,19 @@
             <content>
                 Does this type of item allow scheduling?
                 <hint>When this is checked, you can allow members to create a calendar event associated with items of this type</hint>
-                <yes-no ng-model="entityDefinition.supportsScheduling"></yes-no>
+                <yes-no on-no="disableScheduling()" on-yes="enableScheduling()" ng-model="ui.schedulingEnabled" ng-init="initSchedulingEnabled()"></yes-no>
+                <div ng-show="entityDefinition.supportsScheduling">
+                    What is the calendar category name of events associated with items of this type?
+                    <hint>Usually, pluralizing the name of the entity definition will make sense to members</hint>
+                    <input ng-model="entityDefinition.eventTypeName" />
+                </div>
+                <div ng-show="entityDefinition.supportsScheduling">
+                    How can this type of item be scheduled?
+                    <hint>A Single event item can only be scheduled for one time on the calendar.  Multiple events allows for any number
+                        of non-overlapping calendar events for an item of this type while overlapping events can be scheduled any number
+                        of times at any time</hint>
+                    <select ng-model="entityDefinition.supportsScheduling" ng-options="scheduleOption.value as scheduleOption.name for scheduleOption in schedulingOptions"></select>
+                </div>
             </content>
         </step>
         <step>

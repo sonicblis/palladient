@@ -1,7 +1,8 @@
-<events>
+<events ng-controller="eventsController">
     <table-tools>
-        <tool>Add Event</tool>
+        <tool ng-click="ui.addingEvent = true">Add Event</tool>
     </table-tools>
+    <ng-include src="'app/calendar/includes/eventEditor.html'"></ng-include>
     <div>
         <calendar selected-date="eventsForDate" events="events"></calendar>
         <day>

@@ -1,4 +1,4 @@
-app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$firebaseArray', '$q', function(firebase, $firebaseObject, $rootScope, $firebaseArray, $q) {
+app.service('studioProvider', ['logProvider', 'firebase', '$firebaseObject', '$rootScope', '$firebaseArray', '$q', function(logProvider, firebase, $firebaseObject, $rootScope, $firebaseArray, $q) {
     var _this = this;
     var studio = null;
     var entityDefinitionRef = null;
@@ -85,15 +85,11 @@ app.service('studioProvider', ['firebase', '$firebaseObject', '$rootScope', '$fi
         });
     };
     this.publishEntities = function(publishInfo){
+        logProvider.info('studioProvider', 'publish started', publishInfo);
         publishInfo.entityDefinitions.forEach(function(entityDefinition){
             var cleanedEntityDefinition = firebase.cleanAngularObject(entityDefinition);
-            firebase.workspaceEntityDefinitions.child(entityDefinition.$id).set({
-                workspace: publishInfo.selectedWorkspace.$id,
-                name: entityDefinition.name,
-                properties: cleanedEntityDefinition.properties,
-                displayProperty: cleanedEntityDefinition.displayProperty
-            });
-            delete entityDefinition.$selected;
+            cleanedEntityDefinition.workspace = publishInfo.selectedWorkspace.$id;
+            firebase.workspaceEntityDefinitions.child(entityDefinition.$id).set(cleanedEntityDefinition);
         });
     };
 }]);

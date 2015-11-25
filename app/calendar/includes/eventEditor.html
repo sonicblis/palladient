@@ -1,0 +1,43 @@
+<stepped-process fake-modal ng-show="ui.addingEvent">
+    <step class="active">
+        <header>Create Event</header>
+        <content>
+            Name your calendar event
+            <hint></hint>
+            <input ng-model="event.name">
+        </content>
+    </step>
+    <step>
+        <header>Select an Item to Associate</header>
+        <content>
+            For what item would you like to create an calendar item for?
+            <hint>Only entity types marked as schedulable will show up here.</hint>
+            <select ng-model="event.entityDefinition" ng-change="selectedDefinitionChanged()" ng-options="entityDefinition.$id as entityDefinition.name for entityDefinition in entityDefinitions | filter:schedulableOnly()"></select>
+            <select ng-show="event.entityDefinition" ng-model="event.entity" ng-options="entity.$id as getEntityDisplayName(entity) for entity in entities"></select>
+        </content>
+    </step>
+    <step>
+        <header>Dates and Times</header>
+        <content>
+            Select the dates and times for this event
+            <hint>You can set up recurring schedules in the next step</hint>
+            <event-start>
+                From:
+                <input type="date" ng-model="event.startDate"> <input type="checkbox" ng-model="event.allDay"> All day
+                <event-start-time ng-show="!event.allDay">
+                    <uib-timepicker ng-model="event.startDate"></uib-timepicker>
+                </event-start-time>
+            </event-start>
+            <event-end>To:
+                <input type="date" ng-model="event.endDate">
+                <event-end-time ng-show="!event.allDay">
+                    <uib-timepicker ng-model="event.endDate" minute-step=""></uib-timepicker>
+                </event-end-time>
+            </event-end>
+            <toolbar>
+                <tool class="success" ng-click="saveEvent()">Save Event</tool>
+                <tool class="warn" ng-click="resetEditor()">Cancel</tool>
+            </toolbar>
+        </content>
+    </step>
+</stepped-process>

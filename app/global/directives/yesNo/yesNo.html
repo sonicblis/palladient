@@ -1,2 +1,2 @@
-<yes ng-click="ngModel = 'true'" ng-class="{'primary':ngModel == 'true'}">Yes</yes>
-<no ng-click="ngModel = 'false'" ng-class="{'primary':ngModel == 'false'}">No</no>
+<yes ng-click="ngModel = true; onYes()" ng-class="{'primary':ngModel == true}">Yes</yes>
+<no ng-click="ngModel = false; onNo()" ng-class="{'primary':ngModel == false}">No</no>

@@ -24,4 +24,57 @@ events{
       border-bottom: solid 1px @light;
     }
   }
+
+  stepped-process{
+    select{
+      margin-top: 5px;
+    }
+
+    input{
+      margin-bottom: 5px !important;
+      display: inline-block !important;
+    }
+
+    event-end{
+      & > input{
+        margin-left: 20px;
+      }
+    }
+
+    event-start, event-end{
+      display: block;
+
+      event-start-time, event-end-time{
+        display: block;
+        overflow: auto;
+        margin-left: 43px;
+
+        table{
+          display: inline-block;
+          margin-top: 5px;
+
+          tr{
+            &:first-child, &:last-child{
+              display: none;
+            }
+
+            td{
+              vertical-align: top;
+            }
+          }
+
+          input{
+            margin: 0;
+            width: 20px !important;
+          }
+
+          button{
+            height: 32px;
+            #border-medium;
+            #bg-colorless;
+          }
+        }
+      }
+    }
+  }
 }
