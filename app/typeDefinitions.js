@@ -8,4 +8,9 @@ var templateOptions = {
 };
 var broadcastMessages = {
     resetEditor: 'reset-editor'
-}
+};
+var option = function(display, value, parent){
+    this.display = display;
+    this.value = value;
+    this.parent = parent;
+};

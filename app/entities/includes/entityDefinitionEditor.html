@@ -11,6 +11,22 @@
             </content>
         </step>
         <step>
+            <header>{{entityDefinition.name}} Creation</header>
+            <content>
+                Can Users create these?
+                <hint>If so, this type of item will be added to the service catalog as an option for users to create</hint>
+                <yes-no ng-model="entityDefinition.userCreatable"></yes-no>
+            </content>
+        </step>
+        <step>
+            <header>{{entityDefinition.name}} Icon</header>
+            <content>
+                Choose the icon that best represents this type of item
+                <hint>This symbol will be used to represent this kind of item in short display lists for example</hint>
+                <icon-chooser ng-model="entityDefinition.icon" entity-type-name="entityDefinition.name"></icon-chooser>
+            </content>
+        </step>
+        <step>
             <header>{{entityDefinition.name}} Scheduling</header>
             <content>
                 Does this type of item allow scheduling?

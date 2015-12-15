@@ -1,0 +1,106 @@
+<stepped-process>
+    <step>
+        <header>
+            Rule Trigger
+        </header>
+        <content>
+            When does this rule start?
+            <hint>Choose one of the entity types in your system and an event associated with it</hint>
+            <select ng-change="entityDefinitionSelected(selectedEntityDefinition)" ng-model="$parent.selectedEntityDefinition" ng-options="entityDefinition.name for entityDefinition in entityDefinitions"></select>
+            <select ng-change="eventTypeChanged(rule.event)" ng-model="rule.event" ng-options="option for option in ['Created','Edited','Deleted','Any Exist']"></select>
+        </content>
+    </step>
+    <step>
+        <header>
+            Rule Conditions
+        </header>
+        <content>
+            When does this rule continue?
+            <hint>Create multiple conditions that must be true for the actions in this rule to execute</hint>
+            <conditions ng-repeat="condition in rule.conditions" ng-init="rule.conditions[0].when = conditionWhens[0].value">
+                <condition>
+                    <aggregator ng-if="$first || rule.conditions[0].when != 'always'">
+                        <select ng-if="::$first"
+                                ng-model="condition.when"
+                                ng-options="when.value as when.display for when in conditionWhens"></select>
+                        <yes-no ng-if="::!$first"
+                                yes-text="And"
+                                no-text="Or"
+                                yes-value="and"
+                                no-value="or"
+                                ng-model="condition.aggregator"></yes-no>
+                    </aggregator>
+                    <rule-options ng-if="rule.conditions[0].when != 'always'">
+
+                        <!-- Condition Left -->
+                        <select ng-model="condition.left.type" ng-options="conditionType.value as conditionType.display for conditionType in conditionTypes"></select>
+                        <div ng-if="condition.left.type == 'property' || condition.left.type == 'previousProperty'"
+                             ng-style="{'margin-left':(20 * ($index + 1)) + 'px'}"
+                             ng-repeat="entityDefinition in entityChain">
+                            <i class="fa fa-caret-right"></i>
+                            <select
+                                    ng-model="entityDefinition.selectedProperty"
+                                    ng-change="propertySelected(entityDefinition.selectedProperty, condition)"
+                                    ng-options="property.name for property in entityDefinition.properties"></select>
+                        </div>
+                        <select ng-if="condition.left.type == 'timeContext'"
+                                ng-model="condition.left.value"
+                                ng-options="conditionOption.value as conditionOption.display for conditionOption in conditionOptions"></select><br>
+
+                        <!-- Expression -->
+                        <select ng-model="condition.expression"
+                                ng-options="expression.value as expression.display for expression in expressions | filter:filterOptions(condition.left.type, condition.left.value.type)"></select><br>
+
+                        <!-- Condition Right -->
+                        <select ng-model="condition.right.type"
+                                ng-options="valueType.value as valueType.display for valueType in valueTypes | filter:filterOptions(condition.left.type, condition.left.value.type)"></select>
+                        <select ng-if="condition.right.type.indexOf('constant') == -1"
+                                ng-model="condition.right.value"
+                                ng-options="valueOption.value as valueOption.display for valueOption in valueOptions | filter:filterOptions(condition.right.type)"></select>
+                        <input ng-if="condition.right.type.indexOf('constant') > -1" type="text" ng-model="condition.right.value" ng-model-options="{updateOn: 'blur'}">
+
+                    </rule-options>
+                </condition>
+            </conditions>
+            <yes-no class="ghost"
+                    ng-show="rule.conditions[0].when != 'always'"
+                    yes-text="And"
+                    no-text="Or"
+                    on-yes="rule.conditions.push({aggregator: 'and'})"
+                    on-no="rule.conditions.push({aggregator: 'or'})"></yes-no>
+        </content>
+    </step>
+    <step>
+        <header>
+            Rule Actions
+        </header>
+        <content>
+            What should happen when this rule runs?
+            <hint>You can take multiple actions that affect your domain in multiple ways</hint>
+            <div ng-repeat="action in rule.actions">
+                <select ng-options="action.value as action.display for action in actionOptions" ng-model="action.type"></select>
+                <select ng-options="actionTargetType.value as actionTargetType.display for actionTargetType in actionTargetTypes | filter:filterOptions(action.type)" ng-model="action.targetType"></select>
+                <select ng-options="user.id as user.name for user in users" ng-model="action.target"></select>
+                <button class="button primary ghost" ng-click="rule.actions.push({})">And</button>
+            </div>
+        </content>
+    </step>
+    <step>
+        <header>
+            Save Rule
+        </header>
+        <content>
+            Name your rule
+            <hint>Give your rule a name that is easy to recognize</hint>
+            <input type="text" ng-model="rule.name">
+            <toolbar>
+                <tool class="primary" ng-click="saveBusinessRule()">
+                    {{rule.$id ? 'Update' : 'Create'}}
+                </tool>
+                <tool class="warn" ng-click="cancel()">
+                    Cancel
+                </tool>
+            </toolbar>
+        </content>
+    </step>
+</stepped-process>

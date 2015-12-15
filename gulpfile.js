@@ -31,7 +31,9 @@ gulp.task('thirdParty', function(){
         'node_modules/ui-router-extras/release/modular/ct-ui-router-extras.core.min.js',
         'node_modules/ui-router-extras/release/modular/ct-ui-router-extras.dsr.min.js',
         'thirdParty/ui-bootstrap-custom-0.14.3.js',
-        'thirdParty/ui-bootstrap-custom-tpls-0.14.3.js'
+        'thirdParty/ui-bootstrap-custom-tpls-0.14.3.js',
+        'thirdParty/colorpicker.module.min.js',
+        'thirdParty/angular-idle.min.js'
     ])
         .pipe(concat('thirdparty.js'))
         .pipe(gulp.dest('dist/'));

@@ -1,6 +1,6 @@
 <entities-list ng-controller="entityDefinitionsController">
-    <ng-include ng-show="addingEntity" fake-modal src="'app/entities/includes/entityDefinitionEditor.html'"></ng-include>
-    <ng-include ng-show="publishing" fake-modal src="'app/entities/includes/entityPublisher.html'"></ng-include>
+    <ng-include ng-if="addingEntity" fake-modal src="::'app/entities/includes/entityDefinitionEditor.html'"></ng-include>
+    <ng-include ng-if="publishing" fake-modal src="::'app/entities/includes/entityPublisher.html'"></ng-include>
     <table-tools>
         <tool ng-click="showEntityEditor()">Add Business Aspect</tool>
         <tool drop-down class="primary">
@@ -20,8 +20,8 @@
             </tool>
         </tool-group>
     </table-tools>
-    <table ng-show="view == 'list'" ng-model="entityDefinitions" table-definition="tableDefinition" on-edit="editDefinition(item)" filter-with="searchString"></table>
-    <grid ng-show="view == 'grid'">
+    <table ng-if="!addingEntity && view == 'list'" ng-model="entityDefinitions" table-definition="tableDefinition" on-edit="editDefinition(item)" filter-with="searchString"></table>
+    <grid ng-show="!addingEntity && view == 'grid'">
         <grid-item ng-repeat="entityDefinition in entityDefinitions">
             <entity-definition on-edit="editDefinition(item)" ng-click="entityDefinition.$selected = !entityDefinition.$selected" type-indicator="ui.interestingType" ng-class="{'selected':entityDefinition.$selected, 'interesting':ui.interestingType == entityDefinition.name}" ng-model="entityDefinition"></entity-definition>
         </grid-item>

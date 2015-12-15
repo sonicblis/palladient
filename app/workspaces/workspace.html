@@ -1,8 +1,20 @@
-<toolbox>
-    <heading>
-        Assignments
-    </heading>
-</toolbox>
-<workspace>
-    hey, you made it to a workspace.  Wow.  How far we've come.
+<workspace ng-controller="workspaceController">
+    <toolbox>
+        <heading>
+            Assignments
+        </heading>
+        <message>
+            You have no assignments
+        </message>
+        <heading>
+            Services
+        </heading>
+        <tool ng-repeat="entityDefinition in userCreatableEntities | filter:{'userCreatable': true}">
+            <i class="fa fa-{{entityDefinition.icon.name}}" ng-style="{'background': entityDefinition.icon.background, 'color': entityDefinition.icon.dark ? 'black' : 'white'}"></i>
+            New {{entityDefinition.name}}
+        </tool>
+    </toolbox>
+    <workspace-content>
+        hey, you made it to a workspace.  Wow.  How far we've come.
+    </workspace-content>
 </workspace>

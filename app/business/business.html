@@ -1,0 +1,9 @@
+<business-rules ng-controller="businessController">
+    <table-tools>
+        <tool ng-click="addingRule = true">
+            Add Business Rule
+        </tool>
+    </table-tools>
+    <ng-include src="'app/business/includes/businessRuleEditor.html'" fake-modal ng-if="addingRule"></ng-include>
+    <table ng-if="!addingRule" on-edit="edit(item)" table-definition="tableDefinition" ng-model="businessRules"></table>
+</business-rules>

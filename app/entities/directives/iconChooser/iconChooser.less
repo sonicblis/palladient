@@ -1,0 +1,87 @@
+@import '../../../../styles/colors';
+
+icon-grid{
+  display: inline-block;
+  width: 68%;
+  overflow-y: auto;
+  height: 300px;
+
+  icon{
+    float: left;
+    padding: 10px;
+    float: left;
+  }
+}
+icon-preview{
+  display: inline-block;
+  height: 280px;
+  width: calc(~"30% - 10px");
+  float: right;
+  font-size: 1.2em;
+  text-align: left;
+
+  yes-no{
+    margin-left: 21px;
+  }
+
+  background{
+    width: 96px;
+    height: 39px;
+    #border-dark;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  div{
+    overflow: auto;
+    text-align: left;
+    #border-light;
+    #bg-colorless;
+
+    &:first-of-type{
+      margin-top: 15px;
+    }
+
+    &:not(:last-of-type){
+      border-bottom: 0;
+    }
+
+    i {
+      padding: 7px;
+      text-align: center;
+      border-right: solid 1px @light;
+      min-width: 20px;
+
+      example {
+        display: inline-block;
+        width: 205px;
+        height: 33px;
+        overflow: hidden;
+        padding: 0 5px 0 10px;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  predefined-options{
+    display: block;
+    margin-top: 10px;
+
+    heading{
+      font-size: .8em;
+      display: block;
+    }
+
+    defined-option{
+      display: inline-block;
+      margin-right: 2px;
+      i{
+        padding: 7px;
+        text-align: center;
+        min-width: 20px;
+        #border-dark;
+      }
+    }
+  }
+}

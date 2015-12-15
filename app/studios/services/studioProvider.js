@@ -2,6 +2,7 @@ app.service('studioProvider', ['logProvider', 'firebase', '$firebaseObject', '$r
     var _this = this;
     var studio = null;
     var entityDefinitionRef = null;
+    var businessRules = null;
 
     this.getStudio = function () {
         var deferred = $q.defer();
@@ -30,6 +31,17 @@ app.service('studioProvider', ['logProvider', 'firebase', '$firebaseObject', '$r
         }
         else{
             deferred.resolve(_this.entityDefinitions);
+        }
+        return deferred.promise;
+    };
+    this.getBusinessRules = function(){
+        var deferred = $q.defer();
+        if (!_this.businessRules){
+            _this.getStudio().then(function(loadedStudio){
+                var businessRulesRef = firebase.businessRules.orderByChild('studio').equalTo(loadedStudio.$id);
+                businessRules = $firebaseArray(businessRulesRef);
+                deferred.resolve(businessRules);
+            })
         }
         return deferred.promise;
     };

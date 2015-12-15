@@ -5,6 +5,55 @@ body{
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */
   overflow: hidden;
+
+  page{
+    display:block;
+    margin-top: 54px;
+  }
+}
+
+.blur{
+  -webkit-filter: blur(5px);
+  opacity: .6;
+}
+
+idle-warn{
+  #border-medium;
+  position: absolute;
+  color: @text-default;
+  width: 300px;
+  height: 170px;
+  border-radius: 10px;
+  box-shadow: 0 0 25px -6px @text-default;
+  -webkit-filter: blur(0);
+  z-index: 1001;
+  background: white;
+  text-align: center;
+  left: calc(~"50% - 160px");
+  top: calc(~"50% - 175px");
+
+  header{
+    border-radius: 9px 9px 0 0;
+    #bg-tertiary;
+    #text-lightest;
+    font-weight: bold;
+    font-size: 1.3em;
+    padding: 5px 0;
+  }
+
+  content{
+    padding: 10px;
+    display: block;
+
+    button{
+      margin-top: 15px;
+      width: 150px;
+      border-radius: 5px;
+      display:inline-block;
+      padding: 10px;
+      font-weight: normal;
+    }
+  }
 }
 
 .ghost{

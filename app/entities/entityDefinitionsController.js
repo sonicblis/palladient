@@ -11,7 +11,7 @@ app.controller("entityDefinitionsController", ['$scope', 'studioProvider', funct
     $scope.ui = {interestingType: ''};
     $scope.studio = studioProvider.getStudio();
     $scope.view = 'list';
-    $scope.entityDefinition = {properties: [{}]};
+    $scope.entityDefinition = {properties: [{}], schedulingEnabled: false, userCreatable: false};
 
     $scope.resetEditors = function(){
         $scope.$broadcast(broadcastMessages.resetEditor);
@@ -37,7 +37,7 @@ app.controller("entityDefinitionsController", ['$scope', 'studioProvider', funct
         $scope.publishing = false;
     };
     $scope.cancel = function(){
-        $scope.entityDefinition = {};
+        $scope.entityDefinition = {properties: [{}], schedulingEnabled: false, userCreatable: false};
         $scope.publishing = false;
         $scope.addingEntity = false;
     };

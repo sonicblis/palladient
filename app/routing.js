@@ -24,6 +24,10 @@ app.config(['$stateProvider','$urlRouterProvider','$locationProvider', function(
             url: "/workspaces",
             templateUrl: "app/workspaces/workspaces.html"
         })
+        .state('design.business', {
+            url: "/business",
+            templateUrl: "app/business/business.html"
+        })
         .state('configure', {
             url: "/configure",
             templateUrl: "app/configure/configure.html",

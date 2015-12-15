@@ -1,4 +1,4 @@
-app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 'firebase', '$state', '$q', 'logProvider', function($rootScope, $firebaseObject, $firebaseArray, firebase, $state, $q, logProvider) {
+app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 'firebase', '$state', '$q', 'logProvider', 'Idle', function($rootScope, $firebaseObject, $firebaseArray, firebase, $state, $q, logProvider, Idle) {
     //local
     var _this = this;
     var userWorkspaceDetails = {};
@@ -16,6 +16,21 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
     $rootScope.login = function(){
         _this.login();
     }
+
+    $rootScope.$on('IdleWarn', function(e, countdown){
+        $rootScope.idle = true;
+        $rootScope.seconds = countdown;
+        $rootScope.$digest();
+    });
+    $rootScope.$on('IdleEnd', function(){
+        $rootScope.idle = false;
+        $rootScope.$digest();
+    });
+    $rootScope.$on('IdleTimeout', function(){
+        $rootScope.timedOut = true;
+        $rootScope.logout();
+        $rootScope.$digest();
+    });
 
     function loadUser(user){
         //hook up the current user's ref
@@ -70,6 +85,11 @@ app.service("userProvider", ['$rootScope', '$firebaseObject', '$firebaseArray', 
             if (error) {
                 console.log("Login Failed!", error);
             } else {
+                if (!Idle.running()){
+                    Idle.watch();
+                    $rootScope.timedOut = false;
+                    $rootScope.idle = false;
+                }
                 loadUser(auth);
             }
         });

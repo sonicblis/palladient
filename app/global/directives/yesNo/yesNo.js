@@ -4,7 +4,11 @@ app.directive("yesNo", [function () {
         scope: {
             ngModel: '=',
             onNo: '&',
-            onYes: '&'
+            onYes: '&',
+            yesText: '@',
+            noText: '@',
+            yesValue: '@',
+            noValue: '@'
         },
         templateUrl: 'app/global/directives/yesNo/yesNo.html',
         controller: ['$scope', function ($scope) {

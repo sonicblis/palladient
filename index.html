@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="palladient">
 <head>
     <meta charset="UTF-8">
     <title>Palladient</title>
@@ -12,30 +12,37 @@
     <script src="dist/thirdparty.js"></script>
     <script src="dist/all.js"></script>
 </head>
-<body ng-app="palladient">
-<header>
-    <brand><img src="img/Phaethon%20Logo_Symbol.png">Palladient</brand>
-    <user-tools>
-        <span ng-show="user.authenticated">
-            <tool ng-show="user.studio" ui-sref="design" ui-sref-active="active">
-                Design</tool><tool ng-show="user.studio" ui-sref="configure" ui-sref-active="active">
-                Configure</tool><tool ng-show="user.studio || user.$workspace" ui-sref="work" ui-sref-active="active">
-                Work</tool><tool drop-down drop-down-align="right">
-                <img ng-src="{{user.icon}}" />{{user.name}}
-                <drop-down-options>
-                    <option ng-click="logout()">Logout</option>
-                    <option>My Profile</option>
-                    <option>Change Workspace</option>
-                </drop-down-options>
-            </tool>
-        </span>
-        <tool ng-hide="user.authenticated" ng-click="login()">Login with Google</tool>
-    </user-tools>
-</header>
-<content>
-    <div ng-if="user.$id && !user.studio && !user.$workspaces" ng-include="'app/licensePlans/licensePlanSelector.html'"></div>
-    <div ng-if="user.$id && !user.studio && user.$workspaces && !user.$workspace" ng-include="'app/workspaces/workspaceSelector.html'"></div>
-    <div ng-if="user.$id && (user.studio || user.$workspace)" ui-view></div>
-</content>
+<body>
+    <idle-warn ng-if="idle == true">
+        <header ng-class="{'danger':timedOut}">{{timedOut ? 'Logged Out' : 'Hello?'}}</header>
+        <content ng-hide="timedOut">We don't see you doing anything?<br />Are you still here?<br /><br />To protect your stuff, we'll log you out in {{seconds}} seconds.</content>
+        <content ng-show="timedOut">We've logged you out to protect your secrets.<br /><button class="success" ng-click="login()">Log Back In</button></content>
+    </idle-warn>
+    <page ng-class="{'blur':idle == true}">
+        <header>
+            <brand><img src="img/Phaethon%20Logo_Symbol.png">Palladient</brand>
+            <user-tools>
+                <span ng-show="user.authenticated">
+                    <tool ng-show="user.studio" ui-sref="design" ui-sref-active="active">
+                        Design</tool><tool ng-show="user.studio" ui-sref="configure" ui-sref-active="active">
+                        Configure</tool><tool ng-show="user.studio || user.$workspace" ui-sref="work" ui-sref-active="active">
+                        Work</tool><tool drop-down drop-down-align="right">
+                        <img ng-src="{{user.icon}}" />{{user.name}}
+                        <drop-down-options>
+                            <option ng-click="logout()">Logout</option>
+                            <option>My Profile</option>
+                            <option>Change Workspace</option>
+                        </drop-down-options>
+                    </tool>
+                </span>
+                <tool ng-hide="user.authenticated" ng-click="login()">Login with Google</tool>
+            </user-tools>
+        </header>
+        <content>
+            <div ng-if="user.$id && !user.studio && !user.$workspaces" ng-include="'app/licensePlans/licensePlanSelector.html'"></div>
+            <div ng-if="user.$id && !user.studio && user.$workspaces && !user.$workspace" ng-include="'app/workspaces/workspaceSelector.html'"></div>
+            <div ng-if="user.$id && (user.studio || user.$workspace)" ui-view></div>
+        </content>
+    </page>
 </body>
 </html>

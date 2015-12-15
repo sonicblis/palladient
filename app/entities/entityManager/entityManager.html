@@ -20,5 +20,5 @@
                  ng-show="editingEntity == true"
                  fake-modal></entity-form>
 
-    <table ng-model="entityData" table-definition="tableDefinition" on-edit="edit(item)" filter-with="entityFilter"></table>
+    <table ng-if="!editingEntity" ng-model="entityData" table-definition="tableDefinition" on-edit="edit(item)" filter-with="entityFilter"></table>
 </entity-manager>

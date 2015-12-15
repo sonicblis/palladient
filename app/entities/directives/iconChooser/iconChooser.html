@@ -1,0 +1,19 @@
+<search-box class="left" ng-model="iconSearch"></search-box>
+<icon-grid>
+    <icon ng-repeat="iconOption in icons | filter:iconSearch" ng-click="$parent.icon.name = iconOption"><i class="fa fa-{{iconOption}}"></i></icon>
+</icon-grid>
+
+<icon-preview ng-show="icon.name">
+    Dark Icon: <yes-no ng-model="icon.dark"></yes-no>
+    Background: <background colorpicker ng-model="icon.background" ng-style="{'background': icon.background}"></background>
+    <div ng-repeat="i in ['one','two','three']">
+        <i colorpicker ng-style="{'background': icon.background, 'color': icon.dark ? 'black' : 'white'}" ng-model="icon.background" class="fa fa-{{icon.name}}"></i>
+        <example>{{entityTypeName}} {{i}}</example>
+    </div>
+    <predefined-options>
+        <heading>Pre-defined Options</heading>
+        <defined-option ng-repeat="colorOption in colorOptions" ng-click="icon.background = colorOption.selectedColor; icon.dark = colorOption.dark;">
+            <i ng-style="{'background': colorOption.selectedColor, 'color': colorOption.dark ? 'black' : 'white'}" class="fa fa-{{icon.name}}"></i>
+        </defined-option>
+    </predefined-options>
+</icon-preview>

@@ -14,7 +14,7 @@
         <i class="fa" ng-class="{'fa-square-o':!rowData.$selected,'fa-check-square-o':rowData.$selected}"></i>
     </td>
     <td ng-repeat="column in tableDefinition">
-        <ng-include src="getTemplate(column.templateOption) || 'stringDisplay'"></ng-include>
+        <ng-include src="::getTemplate(column.templateOption) || 'stringDisplay'"></ng-include>
         <toolbar ng-click="$event.stopPropagation()" ng-if="!disableEdit && $last" class="ghost">
             <tool ng-click="edit({item: rowData})"><i class="fa fa-pencil"></i>Edit</tool>
         </toolbar>
